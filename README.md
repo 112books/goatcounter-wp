@@ -2,6 +2,12 @@
 
 Privacy-friendly analytics via [GoatCounter](https://www.goatcounter.com). No cookies, no GDPR banner needed. Full stats dashboard in your WordPress admin.
 
+---
+
+*[Llegeix-ho en català](#goatcounter-analytics-per-a-wordpress)*
+
+---
+
 ## Features
 
 - **No cookies** — no GDPR/cookie consent banner required
@@ -28,7 +34,7 @@ Privacy-friendly analytics via [GoatCounter](https://www.goatcounter.com). No co
 
 ## Requirements
 
-- WordPress 5.9+
+- WordPress 6.0+
 - PHP 7.4+
 - A free [GoatCounter](https://www.goatcounter.com) account
 
@@ -85,3 +91,67 @@ GPL-2.0-or-later — see [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html)
 ## Author
 
 Built by [LinuxBCN](https://linuxbcn.com) for [112books.eu](https://112books.eu).
+
+---
+
+# GoatCounter Analytics per a WordPress
+
+Analítica respectuosa amb la privacitat mitjançant [GoatCounter](https://www.goatcounter.com). Sense cookies, sense banner de consentiment. Panell complet d'estadístiques directament al tauler d'administració de WordPress.
+
+---
+
+*[Read in English](#goatcounter-analytics-for-wordpress)*
+
+---
+
+## Característiques
+
+- **Sense cookies** — no cal cap banner de consentiment GDPR
+- **Lleuger** — un sol script asíncron, zero impacte en el rendiment
+- **Panell amb tres pestanyes**: Temporal, Pàgines, Dispositius
+- **Cinc períodes**: avui, 7 dies, 30 dies, trimestre (90 dies), any (365 dies)
+- **Gràfic de barres SVG** amb degradat, línies de guia i granularitat adaptativa (hora/dia/setmana/mes)
+- **Distribució per dia de la setmana** amb percentatge i nombre de visites
+- **Pàgines més visitades** amb títol de la pàgina WordPress i accés directe
+- **Navegadors, SO i països** amb barres de percentatge
+- **Targetes de resum** (visites totals, pàgines, països, navegador principal)
+- **Pestanya activa recordada** via localStorage entre recàrregues
+- Disponible en **català i anglès**
+
+## Requisits
+
+- WordPress 6.0+
+- PHP 7.4+
+- Un compte gratuït a [GoatCounter](https://www.goatcounter.com)
+
+## Instal·lació
+
+1. Descarrega el ZIP del plugin des de la [pàgina de releases](https://github.com/112books/goatcounter-wp/releases) o via **Code → Download ZIP**
+   - **Nota per a macOS:** Safari descomprimeix automàticament els fitxers descarregats i llença el ZIP a la paperera. Per conservar el ZIP, fes **clic dret → Descarregar fitxer enllaçat**, o utilitza Chrome o Firefox. WordPress necessita el fitxer `.zip` per instal·lar plugins.
+2. Al tauler de WordPress: **Plugins → Afegir → Pujar plugin**
+3. Selecciona el fitxer `.zip` i clica **Instal·la ara**, després **Activa**
+4. Ves a **Analytics → Configuració** i introdueix el codi de lloc i el token API de GoatCounter
+
+## Configuració
+
+1. Crea un compte gratuït a [goatcounter.com](https://www.goatcounter.com)
+   - **Important:** GoatCounter envia un correu de confirmació en registrar-te. Has de clicar l'enllaç per activar el compte abans que l'API funcioni. Revisa la carpeta de SPAM si no el trobes.
+2. Ves a **Analytics → Configuració** al tauler de WordPress
+3. Introdueix el **codi de lloc** (el subdomini de la teva URL de GoatCounter — p.ex. `mysite` si el dashboard és a `mysite.goatcounter.com`)
+4. Crea el **token API**: dashboard de GoatCounter → Settings → API tokens → Create token
+   - **Important:** La secció de tokens API només apareix un cop has confirmat el correu electrònic. Si no la veus, revisa la safata d'entrada (i el SPAM) per al correu de confirmació de GoatCounter.
+5. Enganxa el token a **Analytics → Configuració** i desa
+
+L'script de seguiment s'injecta automàticament al footer de totes les pàgines.
+
+## Privacitat
+
+GoatCounter no fa servir cookies, no recull dades personals i no requereix cap banner de consentiment GDPR. Totes les dades queden als servidors de GoatCounter (o als teus propis si el fas servir en mode autoallotjat).
+
+## Llicència
+
+GPL-2.0-or-later — vegeu [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html)
+
+## Autor
+
+Desenvolupat per [LinuxBCN](https://linuxbcn.com) per a [112books.eu](https://112books.eu).
