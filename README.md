@@ -34,9 +34,11 @@ Privacy-friendly analytics via [GoatCounter](https://www.goatcounter.com). No co
 
 ## Installation
 
-1. Download the plugin zip or clone this repository into `wp-content/plugins/goatcounter-wp/`
-2. Activate the plugin through the **Plugins** menu in WordPress
-3. Go to **Analytics → Settings** and enter your GoatCounter site code and API token
+1. Download the plugin ZIP from the [releases page](https://github.com/112books/goatcounter-wp/releases) or via **Code → Download ZIP**
+   - **macOS note:** Safari automatically unzips downloaded files and deletes the ZIP. To keep the ZIP, use **Right-click → Download Linked File**, or use Chrome/Firefox. WordPress requires the `.zip` file to install plugins.
+2. In your WordPress admin: **Plugins → Add New → Upload Plugin**
+3. Select the `.zip` file and click **Install Now**, then **Activate**
+4. Go to **Analytics → Settings** and enter your GoatCounter site code and API token
 
 ## Setup
 

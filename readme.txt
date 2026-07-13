@@ -42,9 +42,11 @@ Integrate [GoatCounter](https://www.goatcounter.com) into your WordPress site wi
 
 == Installation ==
 
-1. Upload the plugin folder to `/wp-content/plugins/`
-2. Activate the plugin through the **Plugins** menu in WordPress
-3. Go to **Analytics → Settings** and enter your GoatCounter credentials
+1. Download the plugin ZIP file from the GitHub releases page or via Code → Download ZIP.
+   Note for macOS users: Safari automatically unzips downloaded files and moves the ZIP to the trash. To keep the ZIP file, right-click the download link and choose "Download Linked File", or use a different browser such as Chrome or Firefox.
+2. In your WordPress admin, go to Plugins → Add New → Upload Plugin.
+3. Select the `.zip` file and click Install Now, then Activate.
+4. Go to Analytics → Settings and enter your GoatCounter credentials.
 
 == Frequently Asked Questions ==
 
