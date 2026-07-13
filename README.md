@@ -92,6 +92,8 @@ GPL-2.0-or-later — see [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html)
 
 Built by [LinuxBCN](https://linuxbcn.com) for [112books.eu](https://112books.eu).
 
+→ [Project page on LinuxBCN.com](https://linuxbcn.com/en/projectes/goatcounter-wp/)
+
 ---
 
 # GoatCounter Analytics per a WordPress
@@ -155,3 +157,5 @@ GPL-2.0-or-later — vegeu [LICENSE](https://www.gnu.org/licenses/gpl-2.0.html)
 ## Autor
 
 Desenvolupat per [LinuxBCN](https://linuxbcn.com) per a [112books.eu](https://112books.eu).
+
+→ [Pàgina del projecte a LinuxBCN.com](https://linuxbcn.com/ca/projectes/goatcounter-wp/)
