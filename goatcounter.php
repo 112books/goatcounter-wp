@@ -10,7 +10,7 @@
  * Author URI:        https://linuxbcn.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       goatcounter-wp
+ * Text Domain:       goatcounter-analytics
  * Domain Path:       /languages
  */
 
@@ -25,7 +25,7 @@ require_once GCWP_DIR . 'includes/class-admin.php';
 
 add_action( 'plugins_loaded', 'gcwp_init' );
 function gcwp_init() {
-    load_plugin_textdomain( 'goatcounter-wp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+    load_plugin_textdomain( 'goatcounter-analytics', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     new GCWP_Admin();
 }
 

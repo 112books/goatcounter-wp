@@ -2,7 +2,7 @@
 Contributors: linuxbcn
 Tags: analytics, statistics, privacy, goatcounter, gdpr
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.2.0
 License: GPL-2.0-or-later
