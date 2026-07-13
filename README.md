@@ -41,9 +41,12 @@ Privacy-friendly analytics via [GoatCounter](https://www.goatcounter.com). No co
 ## Setup
 
 1. Create a free account at [goatcounter.com](https://www.goatcounter.com)
+   - **Important:** GoatCounter sends a confirmation email when you register. You must click the link to activate your account before the API will work. Check your spam folder if you don't see it.
 2. Go to **Analytics → Settings** in your WordPress admin
 3. Enter your **site code** (the subdomain of your GoatCounter URL — e.g. `mysite` if your dashboard is at `mysite.goatcounter.com`)
-4. Enter your **API token** (GoatCounter dashboard → Settings → API tokens → Create token)
+4. Create your **API token**: GoatCounter dashboard → Settings → API tokens → Create token
+   - **Important:** The API token section only appears after you have confirmed your email address. If you don't see it, check your inbox (and spam) for the GoatCounter confirmation email.
+5. Paste the token into **Analytics → Settings** and save
 
 The tracking script is injected automatically in the footer of every page.
 

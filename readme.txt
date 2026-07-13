@@ -1,8 +1,8 @@
 === GoatCounter Analytics ===
 Contributors: linuxbcn
 Tags: analytics, statistics, privacy, goatcounter, gdpr
-Requires at least: 5.9
-Tested up to: 6.7
+Requires at least: 6.0
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 1.2.0
 License: GPL-2.0-or-later
@@ -56,6 +56,8 @@ It's the subdomain of your GoatCounter dashboard URL. If your dashboard is at `m
 
 = Where do I find my API token? =
 In your GoatCounter dashboard: **Settings → API tokens → Create token**.
+
+The API token section only appears after you have **confirmed your email address**. When you register at goatcounter.com, they send a confirmation email — check your spam folder if you don't see it. The API options won't show up until your account is confirmed.
 
 = Does this plugin set cookies? =
 No. GoatCounter does not use cookies and does not track personal data.
