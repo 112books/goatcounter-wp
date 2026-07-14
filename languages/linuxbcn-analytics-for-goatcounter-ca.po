@@ -1,9 +1,9 @@
-# Catalan translation for GoatCounter Analytics WordPress plugin
+# Catalan translation for LinuxBCN Analytics for GoatCounter WordPress plugin
 # Copyright (C) 2026 LinuxBCN
 # Author: LinuxBCN <hola@linuxbcn.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: GoatCounter Analytics 1.1.0\n"
+"Project-Id-Version: LinuxBCN Analytics for GoatCounter 1.2.0\n"
 "POT-Creation-Date: 2026-07-13\n"
 "PO-Revision-Date: 2026-07-13\n"
 "Language: ca\n"

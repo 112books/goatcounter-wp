@@ -1,10 +1,10 @@
-# GoatCounter Analytics for WordPress
+# LinuxBCN Analytics for GoatCounter
 
 Privacy-friendly analytics via [GoatCounter](https://www.goatcounter.com). No cookies, no GDPR banner needed. Full stats dashboard in your WordPress admin.
 
 ---
 
-*[Llegeix-ho en català](#goatcounter-analytics-per-a-wordpress)*
+*[Llegeix-ho en català](#linuxbcn-analytics-per-a-goatcounter)*
 
 ---
 
@@ -96,13 +96,13 @@ Built by [LinuxBCN](https://linuxbcn.com) for [112books.eu](https://112books.eu)
 
 ---
 
-# GoatCounter Analytics per a WordPress
+# LinuxBCN Analytics per a GoatCounter
 
 Analítica respectuosa amb la privacitat mitjançant [GoatCounter](https://www.goatcounter.com). Sense cookies, sense banner de consentiment. Panell complet d'estadístiques directament al tauler d'administració de WordPress.
 
 ---
 
-*[Read in English](#goatcounter-analytics-for-wordpress)*
+*[Read in English](#linuxbcn-analytics-for-goatcounter)*
 
 ---
 

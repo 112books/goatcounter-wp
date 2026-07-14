@@ -1,4 +1,4 @@
-=== GoatCounter Analytics ===
+=== LinuxBCN Analytics for GoatCounter ===
 Contributors: linuxbcn
 Tags: analytics, statistics, privacy, goatcounter, gdpr
 Requires at least: 6.0
@@ -69,6 +69,16 @@ No. Since GoatCounter does not use cookies or collect personal data, no GDPR con
 
 = Is this plugin free? =
 Yes. The plugin is free and open source (GPL-2.0). GoatCounter itself is also free for personal and low-traffic use.
+
+== External services ==
+
+This plugin relies on [GoatCounter](https://www.goatcounter.com), a third-party privacy-friendly analytics service. GoatCounter is required for the plugin to function — you must create your own free GoatCounter account.
+
+**Tracking script**: On every front-end page view, the visitor's browser loads a tracking script from `https://gc.zgo.at/count.js` and sends a pageview request to `https://{your-site-code}.goatcounter.com/count`. This happens for every visitor on every page load, and includes standard pageview data (URL, referrer, screen size) — GoatCounter does not use cookies and does not collect personally identifiable information.
+
+**Dashboard API**: When you view the Analytics dashboard in your WordPress admin, this plugin sends requests (using your API token) to `https://{your-site-code}.goatcounter.com/api/v0` to retrieve your stats. This only happens when a logged-in administrator visits the Analytics page.
+
+GoatCounter [Terms of Service](https://www.goatcounter.com/help/terms) and [Privacy Policy](https://www.goatcounter.com/help/privacy).
 
 == Screenshots ==
 

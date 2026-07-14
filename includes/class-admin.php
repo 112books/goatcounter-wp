@@ -26,6 +26,38 @@ class GCWP_Admin {
     public function enqueue_assets( $hook ) {
         if ( strpos( $hook, 'goatcounter' ) === false ) return;
         wp_enqueue_style( 'gcwp-admin', GCWP_URL . 'assets/admin.css', [], GCWP_VERSION );
+
+        wp_register_script( 'gcwp-admin-tabs', false, [], GCWP_VERSION, true );
+        wp_enqueue_script( 'gcwp-admin-tabs' );
+        wp_add_inline_script( 'gcwp-admin-tabs', $this->tabs_script() );
+    }
+
+    /* ── Inline JS for tab switching ────────────────────── */
+    private function tabs_script() {
+        return 'function gcwpTab(e, view) {'
+             . '    if (e && e.preventDefault) e.preventDefault();'
+             . '    var tabs   = document.querySelectorAll(".gcwp-tab");'
+             . '    var panels = document.querySelectorAll(".gcwp-panel");'
+             . '    var i;'
+             . '    for (i = 0; i < tabs.length; i++) {'
+             . '        if (tabs[i].getAttribute("data-view") === view) {'
+             . '            tabs[i].className = tabs[i].className.replace(/\bgcwp-active\b/g, "").trim() + " gcwp-active";'
+             . '        } else {'
+             . '            tabs[i].className = tabs[i].className.replace(/\bgcwp-active\b/g, "").trim();'
+             . '        }'
+             . '    }'
+             . '    for (i = 0; i < panels.length; i++) {'
+             . '        panels[i].style.display = panels[i].getAttribute("data-panel") === view ? "block" : "none";'
+             . '    }'
+             . '    try { localStorage.setItem("gcwp_tab", view); } catch (x) {}'
+             . '}'
+             . '(function() {'
+             . '    var saved;'
+             . '    try { saved = localStorage.getItem("gcwp_tab"); } catch (x) {}'
+             . '    if (saved === "pagines" || saved === "dispositius") {'
+             . '        gcwpTab(null, saved);'
+             . '    }'
+             . '})();';
     }
 
     /* ── Settings page ──────────────────────────────────── */
@@ -74,16 +106,17 @@ class GCWP_Admin {
         $api = new GCWP_API();
 
         if ( ! $api->is_configured() ) {
-            $settings_url = esc_url( admin_url( 'admin.php?page=goatcounter-wp-settings' ) );
+            $settings_url = admin_url( 'admin.php?page=goatcounter-wp-settings' );
             echo '<div class="wrap gcwp-wrap"><div class="gcwp-notice">'
-               . '⚙️ Configura el codi de lloc i el token API a <a href="' . $settings_url . '">Configuració</a>.'
+               . '⚙️ Configura el codi de lloc i el token API a <a href="' . esc_url( $settings_url ) . '">Configuració</a>.'
                . '</div></div>';
             return;
         }
 
-        $valid   = [ 'day', 'week', 'month', 'quarter', 'year' ];
-        $period  = isset( $_GET['period'] ) && in_array( $_GET['period'], $valid, true )
-                 ? sanitize_key( $_GET['period'] ) : 'week';
+        $valid  = [ 'day', 'week', 'month', 'quarter', 'year' ];
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view filter, no state change.
+        $period = isset( $_GET['period'] ) && in_array( $_GET['period'], $valid, true )
+                ? sanitize_key( $_GET['period'] ) : 'week';
 
         $periods = [
             'day'     => [ 'label' => 'Avui',       'sub' => '24h' ],
@@ -132,7 +165,7 @@ class GCWP_Admin {
                 $url    = esc_url( add_query_arg( 'period', $key ) );
                 $active = $period === $key ? ' active' : '';
                 ?>
-                <a href="<?php echo $url; ?>" class="gcwp-period-opt<?php echo $active; ?>">
+                <a href="<?php echo esc_url( $url ); ?>" class="gcwp-period-opt<?php echo esc_attr( $active ); ?>">
                     <?php echo esc_html( $p['label'] ); ?>
                     <span class="gcwp-period-sub"><?php echo esc_html( $p['sub'] ); ?></span>
                 </a>
@@ -146,7 +179,7 @@ class GCWP_Admin {
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D51F17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 </div>
                 <div>
-                    <span class="gcwp-metric-val"><?php echo number_format_i18n( $total_visits ); ?></span>
+                    <span class="gcwp-metric-val"><?php echo esc_html( number_format_i18n( $total_visits ) ); ?></span>
                     <span class="gcwp-metric-lbl">Visites</span>
                 </div>
             </div>
@@ -210,9 +243,9 @@ class GCWP_Admin {
             <div class="gcwp-block">
                 <div class="gcwp-block-header">
                     <p class="gcwp-block-title"><?php echo esc_html( $this->chart_title( $period ) ); ?></p>
-                    <span class="gcwp-block-badge"><?php echo number_format_i18n( $total_visits ); ?> visites</span>
+                    <span class="gcwp-block-badge"><?php echo esc_html( number_format_i18n( $total_visits ) ); ?> visites</span>
                 </div>
-                <div class="gcwp-svg-wrap"><?php echo $this->render_svg_chart( $chart_data ); ?></div>
+                <div class="gcwp-svg-wrap"><?php echo wp_kses( $this->render_svg_chart( $chart_data ), $this->svg_allowed_html() ); ?></div>
             </div>
 
             <!-- Day of week -->
@@ -229,14 +262,14 @@ class GCWP_Admin {
                         $zero   = $d['count'] === 0;
                         $row_class = $is_max ? ' gcwp-dow-max' : ( $zero ? ' gcwp-dow-zero' : '' );
                     ?>
-                    <div class="gcwp-dow-row<?php echo $row_class; ?>">
+                    <div class="gcwp-dow-row<?php echo esc_attr( $row_class ); ?>">
                         <span class="gcwp-dow-day"><?php echo esc_html( $day ); ?></span>
                         <div class="gcwp-dow-track">
-                            <div class="gcwp-dow-fill" style="width:<?php echo $bar; ?>%"></div>
+                            <div class="gcwp-dow-fill" style="width:<?php echo esc_attr( $bar ); ?>%"></div>
                         </div>
                         <span class="gcwp-dow-stat">
-                            <strong><?php echo $d['pct']; ?>%</strong>
-                            <?php if ( $d['count'] > 0 ) echo '· ' . number_format_i18n( $d['count'] ) . ' vis.'; ?>
+                            <strong><?php echo esc_html( $d['pct'] ); ?>%</strong>
+                            <?php if ( $d['count'] > 0 ) echo esc_html( '· ' . number_format_i18n( $d['count'] ) . ' vis.' ); ?>
                         </span>
                     </div>
                     <?php endforeach; ?>
@@ -308,35 +341,6 @@ class GCWP_Admin {
         </div><!-- /dispositius -->
 
         </div><!-- .gcwp-wrap -->
-
-        <script>
-        /* global gcwpTab */
-        function gcwpTab(e, view) {
-            if (e && e.preventDefault) e.preventDefault();
-            var tabs   = document.querySelectorAll('.gcwp-tab');
-            var panels = document.querySelectorAll('.gcwp-panel');
-            var i;
-            for (i = 0; i < tabs.length; i++) {
-                if (tabs[i].getAttribute('data-view') === view) {
-                    tabs[i].className = tabs[i].className.replace(/\bgcwp-active\b/g, '').trim() + ' gcwp-active';
-                } else {
-                    tabs[i].className = tabs[i].className.replace(/\bgcwp-active\b/g, '').trim();
-                }
-            }
-            for (i = 0; i < panels.length; i++) {
-                panels[i].style.display = panels[i].getAttribute('data-panel') === view ? 'block' : 'none';
-            }
-            try { localStorage.setItem('gcwp_tab', view); } catch (x) {}
-        }
-        // Restore last active tab
-        (function() {
-            var saved;
-            try { saved = localStorage.getItem('gcwp_tab'); } catch (x) {}
-            if (saved === 'pagines' || saved === 'dispositius') {
-                gcwpTab(null, saved);
-            }
-        })();
-        </script>
         <?php
     }
 
@@ -372,12 +376,12 @@ class GCWP_Admin {
                         <?php endif; ?>
                     </span>
                     <span class="gcwp-hbar-right">
-                        <span class="gcwp-hbar-count"><?php echo number_format_i18n( $count ); ?></span>
-                        <span class="gcwp-hbar-pct"><?php echo $pct; ?>%</span>
+                        <span class="gcwp-hbar-count"><?php echo esc_html( number_format_i18n( $count ) ); ?></span>
+                        <span class="gcwp-hbar-pct"><?php echo esc_html( $pct ); ?>%</span>
                     </span>
                 </div>
                 <div class="gcwp-hbar-track">
-                    <div class="gcwp-hbar-fill" style="width:<?php echo $bar; ?>%"></div>
+                    <div class="gcwp-hbar-fill" style="width:<?php echo esc_attr( $bar ); ?>%"></div>
                 </div>
             </div>
             <?php
@@ -404,12 +408,12 @@ class GCWP_Admin {
                 <div class="gcwp-hbar-meta">
                     <span class="gcwp-hbar-name"><?php echo esc_html( $name ); ?></span>
                     <span class="gcwp-hbar-right">
-                        <span class="gcwp-hbar-count"><?php echo number_format_i18n( $count ); ?></span>
-                        <span class="gcwp-hbar-pct"><?php echo $pct; ?>%</span>
+                        <span class="gcwp-hbar-count"><?php echo esc_html( number_format_i18n( $count ) ); ?></span>
+                        <span class="gcwp-hbar-pct"><?php echo esc_html( $pct ); ?>%</span>
                     </span>
                 </div>
                 <div class="gcwp-hbar-track">
-                    <div class="gcwp-hbar-fill" style="width:<?php echo $bar; ?>%"></div>
+                    <div class="gcwp-hbar-fill" style="width:<?php echo esc_attr( $bar ); ?>%"></div>
                 </div>
             </div>
             <?php
@@ -438,33 +442,33 @@ class GCWP_Admin {
             foreach ( $daily_stats as $s ) {
                 if ( ! isset( $s['day'] ) ) continue;
                 $ts  = strtotime( $s['day'] );
-                $dow = (int) date( 'N', $ts );
+                $dow = (int) gmdate( 'N', $ts );
                 $mon = $ts - ( $dow - 1 ) * 86400;
-                $key = date( 'Y-m-d', $mon );
+                $key = gmdate( 'Y-m-d', $mon );
                 $weeks[ $key ] = ( $weeks[ $key ] ?? 0 ) + ( $s['daily'] ?? 0 );
             }
             ksort( $weeks );
             foreach ( $weeks as $date => $count ) {
-                $data[ date( 'd/m', strtotime( $date ) ) ] = $count;
+                $data[ gmdate( 'd/m', strtotime( $date ) ) ] = $count;
             }
         } elseif ( $period === 'year' ) {
             $months = [];
             foreach ( $daily_stats as $s ) {
                 if ( ! isset( $s['day'] ) ) continue;
-                $key = date( 'Y-m', strtotime( $s['day'] ) );
+                $key = gmdate( 'Y-m', strtotime( $s['day'] ) );
                 $months[ $key ] = ( $months[ $key ] ?? 0 ) + ( $s['daily'] ?? 0 );
             }
             ksort( $months );
             foreach ( $months as $ym => $count ) {
-                $data[ date( 'M y', strtotime( $ym . '-01' ) ) ] = $count;
+                $data[ gmdate( 'M y', strtotime( $ym . '-01' ) ) ] = $count;
             }
         } else {
             foreach ( $daily_stats as $s ) {
                 if ( ! isset( $s['day'] ) ) continue;
                 $ts = strtotime( $s['day'] );
                 if ( $ts > time() ) continue;
-                $eng   = date( 'D', $ts );
-                $label = $period === 'week' ? ( $cat_days[ $eng ] ?? $eng ) : date( 'd/m', $ts );
+                $eng   = gmdate( 'D', $ts );
+                $label = $period === 'week' ? ( $cat_days[ $eng ] ?? $eng ) : gmdate( 'd/m', $ts );
                 $data[ $label ] = $s['daily'] ?? 0;
             }
         }
@@ -577,6 +581,19 @@ class GCWP_Admin {
         $svg .= '</svg>';
 
         return $svg;
+    }
+
+    /* ── Allowed tags/attrs for wp_kses() on generated SVG ── */
+    private function svg_allowed_html() {
+        return [
+            'svg'            => [ 'viewbox' => true, 'xmlns' => true, 'style' => true, 'aria-hidden' => true, 'width' => true, 'height' => true ],
+            'defs'           => [],
+            'lineargradient' => [ 'id' => true, 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true ],
+            'stop'           => [ 'offset' => true, 'stop-color' => true ],
+            'line'           => [ 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true, 'stroke' => true, 'stroke-width' => true ],
+            'text'           => [ 'x' => true, 'y' => true, 'text-anchor' => true, 'font-size' => true, 'font-weight' => true, 'fill' => true ],
+            'rect'           => [ 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'fill' => true, 'rx' => true ],
+        ];
     }
 
     private function chart_title( $period ) {
