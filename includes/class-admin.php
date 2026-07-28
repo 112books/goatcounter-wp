@@ -11,11 +11,30 @@ class GCWP_Admin {
 
     public function register_menu() {
         add_menu_page(
-            'GoatCounter', 'Analytics', 'manage_options', 'goatcounter-wp',
-            [ $this, 'page_stats' ], 'dashicons-chart-area', 80
+            'GoatCounter',
+            __( 'Analytics', 'linuxbcn-analytics-for-goatcounter' ),
+            'manage_options',
+            'goatcounter-wp',
+            [ $this, 'page_stats' ],
+            'dashicons-chart-area',
+            80
         );
-        add_submenu_page( 'goatcounter-wp', 'Estadístiques', 'Estadístiques', 'manage_options', 'goatcounter-wp', [ $this, 'page_stats' ] );
-        add_submenu_page( 'goatcounter-wp', 'Configuració',  'Configuració',  'manage_options', 'goatcounter-wp-settings', [ $this, 'page_settings' ] );
+        add_submenu_page(
+            'goatcounter-wp',
+            __( 'Statistics', 'linuxbcn-analytics-for-goatcounter' ),
+            __( 'Statistics', 'linuxbcn-analytics-for-goatcounter' ),
+            'manage_options',
+            'goatcounter-wp',
+            [ $this, 'page_stats' ]
+        );
+        add_submenu_page(
+            'goatcounter-wp',
+            __( 'Settings', 'linuxbcn-analytics-for-goatcounter' ),
+            __( 'Settings', 'linuxbcn-analytics-for-goatcounter' ),
+            'manage_options',
+            'goatcounter-wp-settings',
+            [ $this, 'page_settings' ]
+        );
     }
 
     public function register_settings() {
@@ -63,25 +82,24 @@ class GCWP_Admin {
 
     /* ── Settings page ──────────────────────────────────── */
     public function page_settings() {
-        $site_code = get_option( 'gcwp_site_code', '' );
         ?>
         <div class="wrap gcwp-wrap">
-            <h1>GoatCounter — Configuració</h1>
+            <h1>GoatCounter — <?php esc_html_e( 'Settings', 'linuxbcn-analytics-for-goatcounter' ); ?></h1>
             <div class="gcwp-setup-box">
-                <h2>Com configurar GoatCounter</h2>
+                <h2><?php esc_html_e( 'How to set up GoatCounter', 'linuxbcn-analytics-for-goatcounter' ); ?></h2>
                 <ol>
-                    <li>Crea un compte gratuït a <a href="https://www.goatcounter.com" target="_blank" rel="noopener">goatcounter.com</a> o instal·la GoatCounter al teu propi servidor.</li>
-                    <li>El codi de lloc és el subdomini del teu dashboard. Exemple: si la URL és <code>mysite.goatcounter.com</code>, el codi és <code>mysite</code>.</li>
-                    <li>Obtén el token API a <strong>Settings → API</strong> del teu dashboard GoatCounter.</li>
-                    <li>Si uses una instal·lació pròpia, introdueix la URL completa (amb https://) al camp «URL auto-allotjada».</li>
-                    <li>Enganxa els valors aquí sota i desa.</li>
+                    <li><?php echo __( 'Create a free account at <a href="https://www.goatcounter.com" target="_blank" rel="noopener">goatcounter.com</a> or install GoatCounter on your own server.', 'linuxbcn-analytics-for-goatcounter' ); ?></li>
+                    <li><?php echo __( 'Your site code is the subdomain of your dashboard URL. Example: if your URL is <code>mysite.goatcounter.com</code>, your site code is <code>mysite</code>.', 'linuxbcn-analytics-for-goatcounter' ); ?></li>
+                    <li><?php echo __( 'Get your API token at <strong>Settings → API</strong> in your GoatCounter dashboard.', 'linuxbcn-analytics-for-goatcounter' ); ?></li>
+                    <li><?php echo __( 'If you use a self-hosted instance, enter the full URL (with https://) in the self-hosted URL field below.', 'linuxbcn-analytics-for-goatcounter' ); ?></li>
+                    <li><?php esc_html_e( 'Paste both values below and save.', 'linuxbcn-analytics-for-goatcounter' ); ?></li>
                 </ol>
             </div>
             <form method="post" action="options.php">
                 <?php settings_fields( 'gcwp_options' ); ?>
                 <table class="form-table" role="presentation">
                     <tr>
-                        <th scope="row"><label for="gcwp_site_code">Codi de lloc</label></th>
+                        <th scope="row"><label for="gcwp_site_code"><?php esc_html_e( 'Site code', 'linuxbcn-analytics-for-goatcounter' ); ?></label></th>
                         <td>
                             <input type="text" id="gcwp_site_code" name="gcwp_site_code"
                                    value="<?php echo esc_attr( get_option( 'gcwp_site_code' ) ); ?>"
@@ -89,16 +107,16 @@ class GCWP_Admin {
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="gcwp_selfhosted_url">URL auto-allotjada</label></th>
+                        <th scope="row"><label for="gcwp_selfhosted_url"><?php esc_html_e( 'Self-hosted URL', 'linuxbcn-analytics-for-goatcounter' ); ?></label></th>
                         <td>
                             <input type="url" id="gcwp_selfhosted_url" name="gcwp_selfhosted_url"
                                    value="<?php echo esc_attr( get_option( 'gcwp_selfhosted_url' ) ); ?>"
-                                   class="regular-text" placeholder="https://estadistiques.exemple.cat" />
-                            <p class="description">Deixa en blanc si uses GoatCounter allotjat (goatcounter.com). Si uses una instal·lació pròpia, posa la URL completa (ex.: <code>https://estadistiques.exemple.cat</code>).</p>
+                                   class="regular-text" placeholder="https://stats.example.com" />
+                            <p class="description"><?php echo __( 'Leave blank if you use hosted GoatCounter (goatcounter.com). If you use a self-hosted instance, enter the full URL (e.g. <code>https://stats.example.com</code>).', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><label for="gcwp_api_token">Token API</label></th>
+                        <th scope="row"><label for="gcwp_api_token"><?php esc_html_e( 'API token', 'linuxbcn-analytics-for-goatcounter' ); ?></label></th>
                         <td>
                             <input type="password" id="gcwp_api_token" name="gcwp_api_token"
                                    value="<?php echo esc_attr( get_option( 'gcwp_api_token' ) ); ?>"
@@ -106,7 +124,7 @@ class GCWP_Admin {
                         </td>
                     </tr>
                 </table>
-                <?php submit_button( 'Desa la configuració' ); ?>
+                <?php submit_button( __( 'Save settings', 'linuxbcn-analytics-for-goatcounter' ) ); ?>
             </form>
         </div>
         <?php
@@ -119,7 +137,7 @@ class GCWP_Admin {
         if ( ! $api->is_configured() ) {
             $settings_url = admin_url( 'admin.php?page=goatcounter-wp-settings' );
             echo '<div class="wrap gcwp-wrap"><div class="gcwp-notice">'
-               . '⚙️ Configura el codi de lloc i el token API a <a href="' . esc_url( $settings_url ) . '">Configuració</a>.'
+               . sprintf( __( '⚙️ Configure your GoatCounter site code and API token in <a href="%s">Settings</a>.', 'linuxbcn-analytics-for-goatcounter' ), esc_url( $settings_url ) )
                . '</div></div>';
             return;
         }
@@ -130,11 +148,11 @@ class GCWP_Admin {
                 ? sanitize_key( $_GET['period'] ) : 'week';
 
         $periods = [
-            'day'     => [ 'label' => 'Avui',       'sub' => '24h' ],
-            'week'    => [ 'label' => '7 dies',      'sub' => 'última setmana' ],
-            'month'   => [ 'label' => '30 dies',     'sub' => 'últim mes' ],
-            'quarter' => [ 'label' => 'Trimestre',   'sub' => '90 dies' ],
-            'year'    => [ 'label' => 'Any',         'sub' => '365 dies' ],
+            'day'     => [ 'label' => __( 'Today', 'linuxbcn-analytics-for-goatcounter' ),       'sub' => '24h' ],
+            'week'    => [ 'label' => __( '7 days', 'linuxbcn-analytics-for-goatcounter' ),      'sub' => __( 'last week', 'linuxbcn-analytics-for-goatcounter' ) ],
+            'month'   => [ 'label' => __( '30 days', 'linuxbcn-analytics-for-goatcounter' ),     'sub' => __( 'last month', 'linuxbcn-analytics-for-goatcounter' ) ],
+            'quarter' => [ 'label' => __( 'Quarter', 'linuxbcn-analytics-for-goatcounter' ),     'sub' => __( '90 days', 'linuxbcn-analytics-for-goatcounter' ) ],
+            'year'    => [ 'label' => __( 'Year', 'linuxbcn-analytics-for-goatcounter' ),        'sub' => __( '365 days', 'linuxbcn-analytics-for-goatcounter' ) ],
         ];
 
         // Fetch data
@@ -164,7 +182,7 @@ class GCWP_Admin {
         <div class="gcwp-topbar">
             <h1>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D51F17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                Analytics
+                <?php esc_html_e( 'Analytics', 'linuxbcn-analytics-for-goatcounter' ); ?>
             </h1>
             <a href="<?php echo esc_url( $dashboard_url ); ?>" target="_blank" rel="noopener" class="gcwp-gc-link">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -173,7 +191,7 @@ class GCWP_Admin {
         </div>
 
         <!-- Period selector -->
-        <nav class="gcwp-period-nav" aria-label="Filtre temporal">
+        <nav class="gcwp-period-nav" aria-label="<?php echo esc_attr__( 'Time filter', 'linuxbcn-analytics-for-goatcounter' ); ?>">
             <?php foreach ( $periods as $key => $p ) :
                 $url    = esc_url( add_query_arg( 'period', $key ) );
                 $active = $period === $key ? ' active' : '';
@@ -193,7 +211,7 @@ class GCWP_Admin {
                 </div>
                 <div>
                     <span class="gcwp-metric-val"><?php echo esc_html( number_format_i18n( $total_visits ) ); ?></span>
-                    <span class="gcwp-metric-lbl">Visites</span>
+                    <span class="gcwp-metric-lbl"><?php esc_html_e( 'Visits', 'linuxbcn-analytics-for-goatcounter' ); ?></span>
                 </div>
             </div>
             <?php if ( ! empty( $pages ) ) : ?>
@@ -203,7 +221,7 @@ class GCWP_Admin {
                 </div>
                 <div>
                     <span class="gcwp-metric-val"><?php echo count( $pages ); ?></span>
-                    <span class="gcwp-metric-lbl">Pàgines</span>
+                    <span class="gcwp-metric-lbl"><?php esc_html_e( 'Pages', 'linuxbcn-analytics-for-goatcounter' ); ?></span>
                 </div>
             </div>
             <?php endif; ?>
@@ -214,7 +232,7 @@ class GCWP_Admin {
                 </div>
                 <div>
                     <span class="gcwp-metric-val"><?php echo count( $country_list ); ?></span>
-                    <span class="gcwp-metric-lbl">Països</span>
+                    <span class="gcwp-metric-lbl"><?php esc_html_e( 'Countries', 'linuxbcn-analytics-for-goatcounter' ); ?></span>
                 </div>
             </div>
             <?php endif; ?>
@@ -225,7 +243,7 @@ class GCWP_Admin {
                 </div>
                 <div>
                     <span class="gcwp-metric-val"><?php echo esc_html( $browser_list[0]['name'] ?? '—' ); ?></span>
-                    <span class="gcwp-metric-lbl">Navegador #1</span>
+                    <span class="gcwp-metric-lbl"><?php esc_html_e( 'Browser #1', 'linuxbcn-analytics-for-goatcounter' ); ?></span>
                 </div>
             </div>
             <?php endif; ?>
@@ -235,15 +253,15 @@ class GCWP_Admin {
         <div class="gcwp-tabs-row" role="tablist">
             <a href="#" class="gcwp-tab gcwp-active" data-view="temporal" role="tab" onclick="gcwpTab(event,'temporal')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                Temporal
+                <?php esc_html_e( 'Temporal', 'linuxbcn-analytics-for-goatcounter' ); ?>
             </a>
             <a href="#" class="gcwp-tab" data-view="pagines" role="tab" onclick="gcwpTab(event,'pagines')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Pàgines
+                <?php esc_html_e( 'Pages', 'linuxbcn-analytics-for-goatcounter' ); ?>
             </a>
             <a href="#" class="gcwp-tab" data-view="dispositius" role="tab" onclick="gcwpTab(event,'dispositius')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                Dispositius
+                <?php esc_html_e( 'Devices', 'linuxbcn-analytics-for-goatcounter' ); ?>
             </a>
         </div>
 
@@ -256,7 +274,7 @@ class GCWP_Admin {
             <div class="gcwp-block">
                 <div class="gcwp-block-header">
                     <p class="gcwp-block-title"><?php echo esc_html( $this->chart_title( $period ) ); ?></p>
-                    <span class="gcwp-block-badge"><?php echo esc_html( number_format_i18n( $total_visits ) ); ?> visites</span>
+                    <span class="gcwp-block-badge"><?php echo esc_html( sprintf( __( '%d visits', 'linuxbcn-analytics-for-goatcounter' ), $total_visits ) ); ?></span>
                 </div>
                 <div class="gcwp-svg-wrap"><?php echo wp_kses( $this->render_svg_chart( $chart_data ), $this->svg_allowed_html() ); ?></div>
             </div>
@@ -265,7 +283,7 @@ class GCWP_Admin {
             <?php if ( ! empty( $dow_data ) ) : ?>
             <div class="gcwp-block">
                 <div class="gcwp-block-header">
-                    <p class="gcwp-block-title">Distribució per dia de la setmana</p>
+                    <p class="gcwp-block-title"><?php esc_html_e( 'Day of week distribution', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                 </div>
                 <?php $max_dow = max( array_column( $dow_data, 'count' ) ); ?>
                 <div class="gcwp-dow">
@@ -282,7 +300,7 @@ class GCWP_Admin {
                         </div>
                         <span class="gcwp-dow-stat">
                             <strong><?php echo esc_html( $d['pct'] ); ?>%</strong>
-                            <?php if ( $d['count'] > 0 ) echo esc_html( '· ' . number_format_i18n( $d['count'] ) . ' vis.' ); ?>
+                            <?php if ( $d['count'] > 0 ) echo esc_html( sprintf( __( '· %s visits', 'linuxbcn-analytics-for-goatcounter' ), number_format_i18n( $d['count'] ) ) ); ?>
                         </span>
                     </div>
                     <?php endforeach; ?>
@@ -292,7 +310,7 @@ class GCWP_Admin {
 
             <?php else : ?>
             <div class="gcwp-block">
-                <p class="gcwp-empty">Encara no hi ha visites registrades per al període seleccionat. Comprova que el codi de seguiment és actiu.</p>
+                <p class="gcwp-empty"><?php esc_html_e( 'No visits recorded yet for the selected period. Make sure the tracking script is active.', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
             </div>
             <?php endif; ?>
 
@@ -303,13 +321,13 @@ class GCWP_Admin {
 
             <div class="gcwp-block">
                 <div class="gcwp-block-header">
-                    <p class="gcwp-block-title">Pàgines més visitades</p>
+                    <p class="gcwp-block-title"><?php esc_html_e( 'Most visited pages', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                     <?php if ( ! empty( $pages ) ) : ?>
-                    <span class="gcwp-block-badge"><?php echo count( $pages ); ?> pàgines</span>
+                    <span class="gcwp-block-badge"><?php echo esc_html( sprintf( __( '%d pages', 'linuxbcn-analytics-for-goatcounter' ), count( $pages ) ) ); ?></span>
                     <?php endif; ?>
                 </div>
                 <?php if ( empty( $pages ) ) : ?>
-                    <p class="gcwp-empty">Sense dades per al període seleccionat.</p>
+                    <p class="gcwp-empty"><?php esc_html_e( 'No data for the selected period.', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                 <?php else : ?>
                     <?php $this->render_pages_list( $pages ); ?>
                 <?php endif; ?>
@@ -323,7 +341,7 @@ class GCWP_Admin {
             <div class="gcwp-grid">
                 <div class="gcwp-block" style="margin-bottom:0">
                     <div class="gcwp-block-header">
-                        <p class="gcwp-block-title">Navegadors</p>
+                        <p class="gcwp-block-title"><?php esc_html_e( 'Browsers', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                         <?php if ( ! empty( $browser_list ) ) : ?>
                         <span class="gcwp-block-badge"><?php echo count( $browser_list ); ?></span>
                         <?php endif; ?>
@@ -332,7 +350,7 @@ class GCWP_Admin {
                 </div>
                 <div class="gcwp-block" style="margin-bottom:0">
                     <div class="gcwp-block-header">
-                        <p class="gcwp-block-title">Sistema operatiu</p>
+                        <p class="gcwp-block-title"><?php esc_html_e( 'Operating system', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                         <?php if ( ! empty( $system_list ) ) : ?>
                         <span class="gcwp-block-badge"><?php echo count( $system_list ); ?></span>
                         <?php endif; ?>
@@ -343,9 +361,9 @@ class GCWP_Admin {
 
             <div class="gcwp-block">
                 <div class="gcwp-block-header">
-                    <p class="gcwp-block-title">Països</p>
+                    <p class="gcwp-block-title"><?php esc_html_e( 'Countries', 'linuxbcn-analytics-for-goatcounter' ); ?></p>
                     <?php if ( ! empty( $country_list ) ) : ?>
-                    <span class="gcwp-block-badge"><?php echo count( $country_list ); ?> països</span>
+                    <span class="gcwp-block-badge"><?php echo esc_html( sprintf( __( '%d countries', 'linuxbcn-analytics-for-goatcounter' ), count( $country_list ) ) ); ?></span>
                     <?php endif; ?>
                 </div>
                 <?php $this->render_hbar_list( $country_list ); ?>
@@ -374,8 +392,8 @@ class GCWP_Admin {
             $title = $post_id ? get_the_title( $post_id ) : '';
 
             if ( ! $title ) {
-                if ( $path === '/' ) $title = 'Portada';
-                elseif ( is_front_page() && get_option( 'page_on_front' ) === $post_id ) $title = 'Portada';
+                if ( $path === '/' ) $title = __( 'Home', 'linuxbcn-analytics-for-goatcounter' );
+                elseif ( is_front_page() && get_option( 'page_on_front' ) === $post_id ) $title = __( 'Home', 'linuxbcn-analytics-for-goatcounter' );
             }
             ?>
             <div class="gcwp-hbar-item">
@@ -405,7 +423,7 @@ class GCWP_Admin {
     /* ── Render horizontal bar list ─────────────────────── */
     private function render_hbar_list( $list ) {
         if ( empty( $list ) ) {
-            echo '<p class="gcwp-empty">Sense dades per al període seleccionat.</p>';
+            echo '<p class="gcwp-empty">' . esc_html__( 'No data for the selected period.', 'linuxbcn-analytics-for-goatcounter' ) . '</p>';
             return;
         }
         $total = array_sum( array_column( $list, 'count' ) );
@@ -436,8 +454,16 @@ class GCWP_Admin {
 
     /* ── Chart data preparation ─────────────────────────── */
     private function prepare_chart_data( $daily_stats, $period ) {
-        $data     = [];
-        $cat_days = [ 'Mon'=>'Dl','Tue'=>'Dt','Wed'=>'Dc','Thu'=>'Dj','Fri'=>'Dv','Sat'=>'Ds','Sun'=>'Dg' ];
+        $data               = [];
+        $cat_days           = [
+            'Mon' => __( 'Mo', 'linuxbcn-analytics-for-goatcounter' ),
+            'Tue' => __( 'Tu', 'linuxbcn-analytics-for-goatcounter' ),
+            'Wed' => __( 'We', 'linuxbcn-analytics-for-goatcounter' ),
+            'Thu' => __( 'Th', 'linuxbcn-analytics-for-goatcounter' ),
+            'Fri' => __( 'Fr', 'linuxbcn-analytics-for-goatcounter' ),
+            'Sat' => __( 'Sa', 'linuxbcn-analytics-for-goatcounter' ),
+            'Sun' => __( 'Su', 'linuxbcn-analytics-for-goatcounter' ),
+        ];
 
         if ( $period === 'day' ) {
             $today = gmdate( 'Y-m-d' );
@@ -491,7 +517,15 @@ class GCWP_Admin {
 
     /* ── DOW distribution ───────────────────────────────── */
     private function dow_distribution( $daily_stats ) {
-        $labels = [ 1=>'Dl', 2=>'Dt', 3=>'Dc', 4=>'Dj', 5=>'Dv', 6=>'Ds', 7=>'Dg' ];
+        $labels = [
+            1 => __( 'Mo', 'linuxbcn-analytics-for-goatcounter' ),
+            2 => __( 'Tu', 'linuxbcn-analytics-for-goatcounter' ),
+            3 => __( 'We', 'linuxbcn-analytics-for-goatcounter' ),
+            4 => __( 'Th', 'linuxbcn-analytics-for-goatcounter' ),
+            5 => __( 'Fr', 'linuxbcn-analytics-for-goatcounter' ),
+            6 => __( 'Sa', 'linuxbcn-analytics-for-goatcounter' ),
+            7 => __( 'Su', 'linuxbcn-analytics-for-goatcounter' ),
+        ];
         $counts = array_fill( 1, 7, 0 );
         foreach ( $daily_stats as $s ) {
             $daily = $s['daily'] ?? 0;
@@ -514,7 +548,7 @@ class GCWP_Admin {
 
     /* ── SVG bar chart ──────────────────────────────────── */
     private function render_svg_chart( $data ) {
-        if ( empty( $data ) ) return '<p class="gcwp-empty">Sense dades.</p>';
+        if ( empty( $data ) ) return '<p class="gcwp-empty">' . esc_html__( 'No data.', 'linuxbcn-analytics-for-goatcounter' ) . '</p>';
 
         $values = array_values( $data );
         $labels = array_keys( $data );
@@ -610,12 +644,13 @@ class GCWP_Admin {
     }
 
     private function chart_title( $period ) {
-        return [
-            'day'     => 'Visites per hora (avui)',
-            'week'    => 'Visites per dia (darrers 7 dies)',
-            'month'   => 'Visites per dia (darrers 30 dies)',
-            'quarter' => 'Visites per setmana (darrer trimestre)',
-            'year'    => 'Visites per mes (darrer any)',
-        ][ $period ] ?? '';
+        $titles = [
+            'day'     => __( 'Visits per hour (today)', 'linuxbcn-analytics-for-goatcounter' ),
+            'week'    => __( 'Visits per day (last 7 days)', 'linuxbcn-analytics-for-goatcounter' ),
+            'month'   => __( 'Visits per day (last 30 days)', 'linuxbcn-analytics-for-goatcounter' ),
+            'quarter' => __( 'Visits per week (last quarter)', 'linuxbcn-analytics-for-goatcounter' ),
+            'year'    => __( 'Visits per month (last year)', 'linuxbcn-analytics-for-goatcounter' ),
+        ];
+        return $titles[ $period ] ?? '';
     }
 }

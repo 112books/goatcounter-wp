@@ -25,6 +25,7 @@ require_once GCWP_DIR . 'includes/class-admin.php';
 
 add_action( 'plugins_loaded', 'gcwp_init' );
 function gcwp_init() {
+    load_plugin_textdomain( 'linuxbcn-analytics-for-goatcounter', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     new GCWP_Admin();
 }
 
