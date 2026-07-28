@@ -70,7 +70,7 @@ function gcwp_add_tracking_attribute( $tag, $handle ) {
 
     return str_replace(
         ' src=',
-        ' data-goatcounter="' . $count_url . '" src=',
+        ' data-goatcounter="' . esc_attr( $count_url ) . '" src=',
         $tag
     );
 }
