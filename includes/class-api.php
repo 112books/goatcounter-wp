@@ -6,14 +6,24 @@ class GCWP_API {
     private $site;
     private $token;
     private $base;
+    private $self_hosted;
 
     public function __construct() {
-        $this->site  = get_option( 'gcwp_site_code' );
-        $this->token = get_option( 'gcwp_api_token' );
-        $this->base  = "https://{$this->site}.goatcounter.com/api/v0";
+        $this->site        = get_option( 'gcwp_site_code' );
+        $this->token       = get_option( 'gcwp_api_token' );
+        $this->self_hosted = get_option( 'gcwp_selfhosted_url' );
+
+        if ( $this->self_hosted ) {
+            $this->base = untrailingslashit( $this->self_hosted ) . '/api/v0';
+        } else {
+            $this->base = "https://{$this->site}.goatcounter.com/api/v0";
+        }
     }
 
     public function is_configured() {
+        if ( $this->self_hosted ) {
+            return ! empty( $this->self_hosted ) && ! empty( $this->token );
+        }
         return ! empty( $this->site ) && ! empty( $this->token );
     }
 

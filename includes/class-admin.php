@@ -19,8 +19,9 @@ class GCWP_Admin {
     }
 
     public function register_settings() {
-        register_setting( 'gcwp_options', 'gcwp_site_code', [ 'sanitize_callback' => 'sanitize_text_field' ] );
-        register_setting( 'gcwp_options', 'gcwp_api_token', [ 'sanitize_callback' => 'sanitize_text_field' ] );
+        register_setting( 'gcwp_options', 'gcwp_site_code',      [ 'sanitize_callback' => 'sanitize_text_field' ] );
+        register_setting( 'gcwp_options', 'gcwp_api_token',      [ 'sanitize_callback' => 'sanitize_text_field' ] );
+        register_setting( 'gcwp_options', 'gcwp_selfhosted_url', [ 'sanitize_callback' => 'esc_url_raw' ] );
     }
 
     public function enqueue_assets( $hook ) {
@@ -69,10 +70,11 @@ class GCWP_Admin {
             <div class="gcwp-setup-box">
                 <h2>Com configurar GoatCounter</h2>
                 <ol>
-                    <li>Crea un compte gratuït a <a href="https://www.goatcounter.com" target="_blank" rel="noopener">goatcounter.com</a>.</li>
-                    <li>El codi de lloc és el subdomini del teu dashboard. Exemple: si la URL és <code>mysitee.goatcounter.com</code>, el codi és <code>mysite</code>.</li>
+                    <li>Crea un compte gratuït a <a href="https://www.goatcounter.com" target="_blank" rel="noopener">goatcounter.com</a> o instal·la GoatCounter al teu propi servidor.</li>
+                    <li>El codi de lloc és el subdomini del teu dashboard. Exemple: si la URL és <code>mysite.goatcounter.com</code>, el codi és <code>mysite</code>.</li>
                     <li>Obtén el token API a <strong>Settings → API</strong> del teu dashboard GoatCounter.</li>
-                    <li>Enganxa els dos valors aquí sota i desa.</li>
+                    <li>Si uses una instal·lació pròpia, introdueix la URL completa (amb https://) al camp «URL auto-allotjada».</li>
+                    <li>Enganxa els valors aquí sota i desa.</li>
                 </ol>
             </div>
             <form method="post" action="options.php">
@@ -84,6 +86,15 @@ class GCWP_Admin {
                             <input type="text" id="gcwp_site_code" name="gcwp_site_code"
                                    value="<?php echo esc_attr( get_option( 'gcwp_site_code' ) ); ?>"
                                    class="regular-text" placeholder="mysite" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="gcwp_selfhosted_url">URL auto-allotjada</label></th>
+                        <td>
+                            <input type="url" id="gcwp_selfhosted_url" name="gcwp_selfhosted_url"
+                                   value="<?php echo esc_attr( get_option( 'gcwp_selfhosted_url' ) ); ?>"
+                                   class="regular-text" placeholder="https://estadistiques.exemple.cat" />
+                            <p class="description">Deixa en blanc si uses GoatCounter allotjat (goatcounter.com). Si uses una instal·lació pròpia, posa la URL completa (ex.: <code>https://estadistiques.exemple.cat</code>).</p>
                         </td>
                     </tr>
                     <tr>
@@ -143,7 +154,9 @@ class GCWP_Admin {
         $chart_data   = $this->prepare_chart_data( $daily_stats, $period );
         $dow_data     = $this->dow_distribution( $daily_stats );
 
-        $site_code = get_option( 'gcwp_site_code' );
+        $site_code    = get_option( 'gcwp_site_code' );
+        $self_hosted  = get_option( 'gcwp_selfhosted_url' );
+        $dashboard_url = $self_hosted ? untrailingslashit( $self_hosted ) : 'https://' . esc_attr( $site_code ) . '.goatcounter.com';
         ?>
         <div class="wrap gcwp-wrap">
 
@@ -153,7 +166,7 @@ class GCWP_Admin {
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D51F17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 Analytics
             </h1>
-            <a href="https://<?php echo esc_attr( $site_code ); ?>.goatcounter.com" target="_blank" rel="noopener" class="gcwp-gc-link">
+            <a href="<?php echo esc_url( $dashboard_url ); ?>" target="_blank" rel="noopener" class="gcwp-gc-link">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 GoatCounter
             </a>
