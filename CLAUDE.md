@@ -132,8 +132,70 @@ Handles: HTTP requests to GoatCounter API, date range calculation, response pars
 
 ## Pendent
 
-- **Traducció catalana a translate.wordpress.org** — el projecte es crea automàticament però pot trigar 24h. Recordatori al calendari per 2026-07-17. URL: https://translate.wordpress.org/projects/wp-plugins/linuxbcn-analytics-for-goatcounter/
+- **Traducció catalana a translate.wordpress.org** — el projecte es crea automàticament però pot trigar 24h. URL: https://translate.wordpress.org/projects/wp-plugins/linuxbcn-analytics-for-goatcounter/
 - **Assets de WordPress.org** (banner 1544×500, icona 256×256) — opcionals però recomanats per millorar la presència al directori. Van a SVN `/assets/`, no a `/trunk/`.
+
+## TODO: Internacionalització correcta (v1.3.0)
+
+El plugin té ~45 cadenes hardcoded en català al PHP. Cal refactoritzar-ho perquè WordPress i translate.wordpress.org funcionin correctament.
+
+### Problema actual
+El codi no usa `__()` ni `_e()`, per tant els fitxers `.po`/`.mo` no tenen cap efecte. Tot el text de la UI està escrit directament en català al PHP.
+
+### Fitxers a modificar
+
+**`includes/class-admin.php`** — totes les cadenes de la UI:
+
+1. `register_menu()` — 4 cadenes:
+   - `'Estadístiques'` → `__( 'Statistics', 'linuxbcn-analytics-for-goatcounter' )`
+   - `'Configuració'` → `__( 'Settings', 'linuxbcn-analytics-for-goatcounter' )`
+
+2. `page_settings()` — ~10 cadenes:
+   - Títol h1, h2, instruccions de configuració (4 passos), etiquetes de camp, botó submit
+
+3. `page_stats()` — ~20 cadenes:
+   - Missatge "no configurat" (⚙️)
+   - Labels dels períodes: 'Avui', '7 dies', '30 dies', 'Trimestre', 'Any' + subtítols
+   - `aria-label` del nav
+   - Labels de mètriques: 'Visites', 'Pàgines', 'Països', 'Navegador #1'
+   - Noms de tabs: 'Temporal', 'Pàgines', 'Dispositius'
+   - Títols de blocs: 'Distribució per dia de la setmana', 'Pàgines més visitades', 'Navegadors', 'Sistema operatiu', 'Països'
+   - Badge 'visites', 'pàgines', 'països'
+   - Missatge buit: 'Encara no hi ha visites registrades...'
+
+4. `render_pages_list()` — 1 cadena:
+   - `'Portada'` → `__( 'Home', 'linuxbcn-analytics-for-goatcounter' )`
+
+5. `render_hbar_list()` — 1 cadena:
+   - `'Sense dades per al període seleccionat.'`
+
+6. `render_svg_chart()` — 1 cadena:
+   - `'Sense dades.'`
+
+7. `chart_title()` — 5 cadenes (títols del gràfic per cada període)
+
+8. **Dies de la setmana** (cas especial) — usar `_x()` amb context:
+   ```php
+   // A prepare_chart_data() i dow_distribution():
+   'Dl' => _x( 'Mo', 'Day abbreviation: Monday', 'linuxbcn-analytics-for-goatcounter' )
+   // etc. per Dt, Dc, Dj, Dv, Ds, Dg
+   ```
+
+### Passos per completar
+
+1. Substituir totes les cadenes hardcoded per crides `__()` / `_e()` / `_x()`
+2. Afegir `load_plugin_textdomain()` a `gcwp_init()` a `goatcounter.php`
+3. Actualitzar `languages/linuxbcn-analytics-for-goatcounter-ca.po` amb les cadenes en anglès + traduccions catalanes
+4. Generar `languages/linuxbcn-analytics-for-goatcounter.pot` (plantilla per a altres idiomes)
+5. Recompilar el `.mo` (`msgfmt` o PoEdit)
+6. Bumpejar versió a `1.3.0` (a `goatcounter.php`, `readme.txt`, `CLAUDE.md`)
+7. Commit + tag `v1.3.0` → deploy automàtic via GitHub Actions
+8. Importar `.po` català a translate.wordpress.org (requereix rol PTE)
+
+### Notes
+- Esforç estimat: ~2h de feina mecànica, risc baix
+- Cap canvi de lògica, només substitució de strings
+- Els dies catalans (Dl, Dt...) surten en el gràfic SVG i la distribució DOW
 
 ## Development Notes
 
@@ -141,3 +203,14 @@ Handles: HTTP requests to GoatCounter API, date range calculation, response pars
 - Screenshots go in `assets/screenshots/` (WordPress.org reads them from SVN `assets/` folder, NOT from `trunk/assets/`)
 - WordPress.org assets (banner, icon, screenshots) live in SVN `/assets/` at the root, separate from `/trunk/`
 - The `.github/` folder is excluded from SVN deployment (action handles this automatically)
+
+
+---
+
+## Control horari
+
+Skill actiu: `gestor-hores` — registra automàticament el temps de treball per sessió.
+
+- Logs a `.taques/goatcounter-wp/YYYY-MM-DD.md` (creat automàticament)
+- Comandes: `/time-log [tasca] [hores]`, `/time-report [periode]`, `/time-config [hores] [tarifa]`
+- No modificar manualment els fitxers `.taques/` — són append-only
