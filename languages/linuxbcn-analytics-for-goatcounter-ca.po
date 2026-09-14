@@ -1,139 +1,277 @@
-# Catalan translation for LinuxBCN Analytics for GoatCounter WordPress plugin
+# Catalan translations for LinuxBCN Analytics for GoatCounter package.
 # Copyright (C) 2026 LinuxBCN
-# Author: LinuxBCN <hola@linuxbcn.com>
+# This file is distributed under the same license as the LinuxBCN Analytics for GoatCounter package.
+# Author: LinuxBCN <hola@linuxbcn.com>, 2026.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LinuxBCN Analytics for GoatCounter 1.2.0\n"
-"POT-Creation-Date: 2026-07-13\n"
-"PO-Revision-Date: 2026-07-13\n"
+"Report-Msgid-Bugs-To: hola@linuxbcn.com\n"
+"POT-Creation-Date: 2026-07-29 07:36+1000\n"
+"PO-Revision-Date: 2026-07-29 07:36+1000\n"
+"Last-Translator: LinuxBCN <hola@linuxbcn.com>\n"
+"Language-Team: Catalan <ca@li.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "GoatCounter Analytics"
-msgstr "GoatCounter Analítiques"
-
+#: includes/class-admin.php:15 includes/class-admin.php:182
 msgid "Analytics"
 msgstr "Analítiques"
 
+#: includes/class-admin.php:24 includes/class-admin.php:25
 msgid "Statistics"
 msgstr "Estadístiques"
 
+#: includes/class-admin.php:32 includes/class-admin.php:33
+#: includes/class-admin.php:85
 msgid "Settings"
 msgstr "Configuració"
 
-msgid "GoatCounter — Settings"
-msgstr "GoatCounter — Configuració"
-
+#: includes/class-admin.php:87
 msgid "How to set up GoatCounter"
 msgstr "Com configurar GoatCounter"
 
-msgid "Create a free account at <a href=\"%s\" target=\"_blank\" rel=\"noopener\">goatcounter.com</a>."
-msgstr "Crea un compte gratuït a <a href=\"%s\" target=\"_blank\" rel=\"noopener\">goatcounter.com</a>."
+#: includes/class-admin.php:89
+msgid ""
+"Create a free account at <a href=\"https://www.goatcounter.com\" "
+"target=\"_blank\" rel=\"noopener\">goatcounter.com</a> or install "
+"GoatCounter on your own server."
+msgstr ""
+"Crea un compte gratuït a <a href=\"https://www.goatcounter.com\" "
+"target=\"_blank\" rel=\"noopener\">goatcounter.com</a> o instal·la "
+"GoatCounter al teu propi servidor."
 
-msgid "Your site code is the subdomain of your dashboard URL. Example: if your URL is mysite.goatcounter.com, your site code is mysite."
-msgstr "El codi del lloc és el subdomini de la teva URL del tauler. Exemple: si la URL és mysite.goatcounter.com, el codi és mysite."
+#: includes/class-admin.php:90
+msgid ""
+"Your site code is the subdomain of your dashboard URL. Example: if your URL "
+"is <code>mysite.goatcounter.com</code>, your site code is <code>mysite</"
+"code>."
+msgstr ""
+"El codi del lloc és el subdomini de la teva URL del tauler. Exemple: si la "
+"URL és <code>mysite.goatcounter.com</code>, el codi és <code>mysite</code>."
 
-msgid "Get your API token at <strong>Settings → API</strong> in your GoatCounter dashboard (<a href=\"%s\" target=\"_blank\" rel=\"noopener\">%s</a>)."
-msgstr "Obtén el token de l'API a <strong>Configuració → API</strong> del tauler de GoatCounter (<a href=\"%s\" target=\"_blank\" rel=\"noopener\">%s</a>)."
+#: includes/class-admin.php:91
+msgid ""
+"Get your API token at <strong>Settings → API</strong> in your GoatCounter "
+"dashboard."
+msgstr ""
+"Obtén el token de l'API a <strong>Configuració → API</strong> del tauler de "
+"GoatCounter."
 
+#: includes/class-admin.php:92
+msgid ""
+"If you use a self-hosted instance, enter the full URL (with https://) in the "
+"self-hosted URL field below."
+msgstr ""
+"Si uses una instal·lació pròpia, introdueix la URL completa (amb https://) "
+"al camp «URL auto-allotjada»."
+
+#: includes/class-admin.php:93
 msgid "Paste both values below and save."
-msgstr "Enganxa els dos valors aquí sota i desa."
+msgstr "Enganxa els valors aquí sota i desa."
 
+#: includes/class-admin.php:100
 msgid "Site code"
 msgstr "Codi del lloc"
 
-msgid "The subdomain of your GoatCounter dashboard (e.g. mysite from mysite.goatcounter.com)."
-msgstr "El subdomini del tauler de GoatCounter (p. ex. mysite de mysite.goatcounter.com)."
+#: includes/class-admin.php:108
+msgid "Self-hosted URL"
+msgstr "URL auto-allotjada"
 
+#: includes/class-admin.php:113
+msgid ""
+"Leave blank if you use hosted GoatCounter (goatcounter.com). If you use a "
+"self-hosted instance, enter the full URL (e.g. <code>https://"
+"stats.example.com</code>)."
+msgstr ""
+"Deixa en blanc si uses GoatCounter allotjat (goatcounter.com). Si uses una "
+"instal·lació pròpia, posa la URL completa (ex.: <code>https://"
+"estadistiques.exemple.cat</code>)."
+
+#: includes/class-admin.php:117
 msgid "API token"
 msgstr "Token de l'API"
 
-msgid "Found at Settings → API in your GoatCounter dashboard."
-msgstr "El trobaràs a Configuració → API del tauler de GoatCounter."
-
+#: includes/class-admin.php:125
 msgid "Save settings"
 msgstr "Desa la configuració"
 
-msgid "⚙️ Configure your GoatCounter site code and API token in <a href=\"%s\">Settings</a>."
-msgstr "⚙️ Configura el codi del lloc i el token de l'API de GoatCounter a <a href=\"%s\">Configuració</a>."
+#: includes/class-admin.php:137
+#, php-format
+msgid ""
+"⚙️ Configure your GoatCounter site code and API token in <a "
+"href=\"%s\">Settings</a>."
+msgstr ""
+"⚙️ Configura el codi del lloc i el token de l'API a <a "
+"href=\"%s\">Configuració</a>."
 
+#: includes/class-admin.php:148
 msgid "Today"
 msgstr "Avui"
 
-msgid "Last 7 days"
-msgstr "Darrers 7 dies"
+#: includes/class-admin.php:149
+msgid "7 days"
+msgstr "7 dies"
 
-msgid "Last 30 days"
-msgstr "Darrers 30 dies"
+#: includes/class-admin.php:149
+msgid "last week"
+msgstr "última setmana"
 
+#: includes/class-admin.php:150
+msgid "30 days"
+msgstr "30 dies"
+
+#: includes/class-admin.php:150
+msgid "last month"
+msgstr "últim mes"
+
+#: includes/class-admin.php:151
+msgid "Quarter"
+msgstr "Trimestre"
+
+#: includes/class-admin.php:151
+msgid "90 days"
+msgstr "90 dies"
+
+#: includes/class-admin.php:152
+msgid "Year"
+msgstr "Any"
+
+#: includes/class-admin.php:152
+msgid "365 days"
+msgstr "365 dies"
+
+#: includes/class-admin.php:191
+msgid "Time filter"
+msgstr "Filtre temporal"
+
+#: includes/class-admin.php:211
 msgid "Visits"
 msgstr "Visites"
 
-msgid "Unique visitors"
-msgstr "Visitants únics"
+#: includes/class-admin.php:221 includes/class-admin.php:257
+msgid "Pages"
+msgstr "Pàgines"
 
-msgid "New visitors"
-msgstr "Visitants nous"
-
-msgid "What does this mean?"
-msgstr "Què vol dir això?"
-
-msgid "Top pages"
-msgstr "Pàgines principals"
-
-msgid "Page"
-msgstr "Pàgina"
-
-msgid "Unique"
-msgstr "Únics"
-
-msgid "Referrers"
-msgstr "Orígens"
-
-msgid "Source"
-msgstr "Origen"
-
+#: includes/class-admin.php:232 includes/class-admin.php:361
 msgid "Countries"
 msgstr "Països"
 
-msgid "No data yet."
-msgstr "Encara no hi ha dades."
+#: includes/class-admin.php:243
+msgid "Browser #1"
+msgstr "Navegador #1"
 
-msgid "No referrers yet."
-msgstr "Encara no hi ha orígens."
+#: includes/class-admin.php:253
+msgid "Temporal"
+msgstr "Temporal"
 
-msgid "(direct)"
-msgstr "(directe)"
+#: includes/class-admin.php:261
+msgid "Devices"
+msgstr "Dispositius"
 
-msgid "No visits recorded yet. Make sure the tracking script is active and the site has received traffic."
-msgstr "Encara no s'han registrat visites. Assegura't que l'script de seguiment és actiu i que el lloc ha rebut trànsit."
+#: includes/class-admin.php:274
+#, php-format
+msgid "%d visits"
+msgstr "%d visites"
 
-msgid "today"
-msgstr "avui"
+#: includes/class-admin.php:283
+msgid "Day of week distribution"
+msgstr "Distribució per dia de la setmana"
 
-msgid "in the last 7 days"
-msgstr "els darrers 7 dies"
+#: includes/class-admin.php:300
+#, php-format
+msgid "· %s visits"
+msgstr "· %s vis."
 
-msgid "in the last 30 days"
-msgstr "els darrers 30 dies"
+#: includes/class-admin.php:310
+msgid ""
+"No visits recorded yet for the selected period. Make sure the tracking "
+"script is active."
+msgstr ""
+"Encara no hi ha visites registrades per al període seleccionat. Comprova que "
+"el codi de seguiment és actiu."
 
-msgid "in this period"
-msgstr "en aquest període"
+#: includes/class-admin.php:321
+msgid "Most visited pages"
+msgstr "Pàgines més visitades"
 
-msgid "direct traffic"
-msgstr "trànsit directe"
+#: includes/class-admin.php:323
+#, php-format
+msgid "%d pages"
+msgstr "%d pàgines"
 
-msgid "Your site received <strong>%1$s visits</strong> from <strong>%2$s unique visitors</strong> %3$s."
-msgstr "El teu lloc ha rebut <strong>%1$s visites</strong> de <strong>%2$s visitants únics</strong> %3$s."
+#: includes/class-admin.php:327 includes/class-admin.php:421
+msgid "No data for the selected period."
+msgstr "Sense dades per al període seleccionat."
 
-msgid "%d%% of visits are returning visitors — a good sign of loyal readership."
-msgstr "El %d%% de les visites són visitants recurrents — un bon signe de fidelitat."
+#: includes/class-admin.php:341
+msgid "Browsers"
+msgstr "Navegadors"
 
-msgid "The most visited page is <strong>%s</strong>."
-msgstr "La pàgina més visitada és <strong>%s</strong>."
+#: includes/class-admin.php:350
+msgid "Operating system"
+msgstr "Sistema operatiu"
 
-msgid "Most traffic comes from <strong>%s</strong>."
-msgstr "La majoria del trànsit prové de <strong>%s</strong>."
+#: includes/class-admin.php:363
+#, php-format
+msgid "%d countries"
+msgstr "%d països"
+
+#: includes/class-admin.php:391 includes/class-admin.php:392
+msgid "Home"
+msgstr "Portada"
+
+#: includes/class-admin.php:453 includes/class-admin.php:514
+msgid "Mo"
+msgstr "Dl"
+
+#: includes/class-admin.php:454 includes/class-admin.php:515
+msgid "Tu"
+msgstr "Dt"
+
+#: includes/class-admin.php:455 includes/class-admin.php:516
+msgid "We"
+msgstr "Dc"
+
+#: includes/class-admin.php:456 includes/class-admin.php:517
+msgid "Th"
+msgstr "Dj"
+
+#: includes/class-admin.php:457 includes/class-admin.php:518
+msgid "Fr"
+msgstr "Dv"
+
+#: includes/class-admin.php:458 includes/class-admin.php:519
+msgid "Sa"
+msgstr "Ds"
+
+#: includes/class-admin.php:459 includes/class-admin.php:520
+msgid "Su"
+msgstr "Dg"
+
+#: includes/class-admin.php:543
+msgid "No data."
+msgstr "Sense dades."
+
+#: includes/class-admin.php:639
+msgid "Visits per hour (today)"
+msgstr "Visites per hora (avui)"
+
+#: includes/class-admin.php:640
+msgid "Visits per day (last 7 days)"
+msgstr "Visites per dia (darrers 7 dies)"
+
+#: includes/class-admin.php:641
+msgid "Visits per day (last 30 days)"
+msgstr "Visites per dia (darrers 30 dies)"
+
+#: includes/class-admin.php:642
+msgid "Visits per week (last quarter)"
+msgstr "Visites per setmana (darrer trimestre)"
+
+#: includes/class-admin.php:643
+msgid "Visits per month (last year)"
+msgstr "Visites per mes (darrer any)"

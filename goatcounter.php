@@ -25,6 +25,7 @@ require_once GCWP_DIR . 'includes/class-admin.php';
 
 add_action( 'plugins_loaded', 'gcwp_init' );
 function gcwp_init() {
+    load_plugin_textdomain( 'linuxbcn-analytics-for-goatcounter', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     new GCWP_Admin();
 }
 
@@ -32,23 +33,44 @@ function gcwp_init() {
 add_action( 'wp_enqueue_scripts', 'gcwp_enqueue_tracking_script' );
 function gcwp_enqueue_tracking_script() {
     if ( is_admin() ) return;
-    $site = get_option( 'gcwp_site_code' );
-    if ( ! $site ) return;
-    $site = sanitize_text_field( $site );
 
-    wp_enqueue_script( 'gcwp-goatcounter', '//gc.zgo.at/count.js', [], GCWP_VERSION, true );
+    $site        = get_option( 'gcwp_site_code' );
+    $self_hosted = get_option( 'gcwp_selfhosted_url' );
+
+    if ( ! $site && ! $self_hosted ) return;
+
+    if ( $self_hosted ) {
+        $self_hosted = untrailingslashit( esc_url_raw( $self_hosted ) );
+        $script_url  = $self_hosted . '/count.js';
+    } else {
+        $site       = sanitize_text_field( $site );
+        $script_url = '//gc.zgo.at/count.js';
+    }
+
+    wp_enqueue_script( 'gcwp-goatcounter', $script_url, [], GCWP_VERSION, true );
     wp_script_add_data( 'gcwp-goatcounter', 'async', true );
-    wp_script_add_data( 'gcwp-goatcounter', 'gcwp_site', $site );
+    wp_script_add_data( 'gcwp-goatcounter', 'gcwp_site', $site ?: '' );
+    if ( $self_hosted ) {
+        wp_script_add_data( 'gcwp-goatcounter', 'gcwp_selfhosted', $self_hosted );
+    }
 }
 
 add_filter( 'script_loader_tag', 'gcwp_add_tracking_attribute', 10, 2 );
 function gcwp_add_tracking_attribute( $tag, $handle ) {
     if ( 'gcwp-goatcounter' !== $handle ) return $tag;
-    $site = wp_scripts()->get_data( $handle, 'gcwp_site' );
-    if ( ! $site ) return $tag;
+
+    $self_hosted = wp_scripts()->get_data( $handle, 'gcwp_selfhosted' );
+    if ( $self_hosted ) {
+        $count_url = $self_hosted . '/count';
+    } else {
+        $site = wp_scripts()->get_data( $handle, 'gcwp_site' );
+        if ( ! $site ) return $tag;
+        $count_url = 'https://' . esc_attr( $site ) . '.goatcounter.com/count';
+    }
+
     return str_replace(
         ' src=',
-        ' data-goatcounter="https://' . esc_attr( $site ) . '.goatcounter.com/count" src=',
+        ' data-goatcounter="' . esc_attr( $count_url ) . '" src=',
         $tag
     );
 }

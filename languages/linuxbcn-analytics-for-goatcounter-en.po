@@ -1,0 +1,278 @@
+# English translations for LinuxBCN Analytics for GoatCounter package.
+# Copyright (C) 2026 LinuxBCN
+# This file is distributed under the same license as the LinuxBCN Analytics for GoatCounter package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: LinuxBCN Analytics for GoatCounter 1.2.0\n"
+"Report-Msgid-Bugs-To: hola@linuxbcn.com\n"
+"POT-Creation-Date: 2026-07-29 07:36+1000\n"
+"PO-Revision-Date: 2026-07-29 07:36+1000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: includes/class-admin.php:15 includes/class-admin.php:182
+msgid "Analytics"
+msgstr "Analytics"
+
+#: includes/class-admin.php:24 includes/class-admin.php:25
+msgid "Statistics"
+msgstr "Statistics"
+
+#: includes/class-admin.php:32 includes/class-admin.php:33
+#: includes/class-admin.php:85
+msgid "Settings"
+msgstr "Settings"
+
+#: includes/class-admin.php:87
+msgid "How to set up GoatCounter"
+msgstr "How to set up GoatCounter"
+
+#: includes/class-admin.php:89
+msgid ""
+"Create a free account at <a href=\"https://www.goatcounter.com\" "
+"target=\"_blank\" rel=\"noopener\">goatcounter.com</a> or install "
+"GoatCounter on your own server."
+msgstr ""
+"Create a free account at <a href=\"https://www.goatcounter.com\" "
+"target=\"_blank\" rel=\"noopener\">goatcounter.com</a> or install "
+"GoatCounter on your own server."
+
+#: includes/class-admin.php:90
+msgid ""
+"Your site code is the subdomain of your dashboard URL. Example: if your URL "
+"is <code>mysite.goatcounter.com</code>, your site code is <code>mysite</"
+"code>."
+msgstr ""
+"Your site code is the subdomain of your dashboard URL. Example: if your URL "
+"is <code>mysite.goatcounter.com</code>, your site code is <code>mysite</"
+"code>."
+
+#: includes/class-admin.php:91
+msgid ""
+"Get your API token at <strong>Settings → API</strong> in your GoatCounter "
+"dashboard."
+msgstr ""
+"Get your API token at <strong>Settings → API</strong> in your GoatCounter "
+"dashboard."
+
+#: includes/class-admin.php:92
+msgid ""
+"If you use a self-hosted instance, enter the full URL (with https://) in the "
+"self-hosted URL field below."
+msgstr ""
+"If you use a self-hosted instance, enter the full URL (with https://) in the "
+"self-hosted URL field below."
+
+#: includes/class-admin.php:93
+msgid "Paste both values below and save."
+msgstr "Paste both values below and save."
+
+#: includes/class-admin.php:100
+msgid "Site code"
+msgstr "Site code"
+
+#: includes/class-admin.php:108
+msgid "Self-hosted URL"
+msgstr "Self-hosted URL"
+
+#: includes/class-admin.php:113
+msgid ""
+"Leave blank if you use hosted GoatCounter (goatcounter.com). If you use a "
+"self-hosted instance, enter the full URL (e.g. <code>https://"
+"stats.example.com</code>)."
+msgstr ""
+"Leave blank if you use hosted GoatCounter (goatcounter.com). If you use a "
+"self-hosted instance, enter the full URL (e.g. <code>https://"
+"stats.example.com</code>)."
+
+#: includes/class-admin.php:117
+msgid "API token"
+msgstr "API token"
+
+#: includes/class-admin.php:125
+msgid "Save settings"
+msgstr "Save settings"
+
+#: includes/class-admin.php:137
+#, php-format
+msgid ""
+"⚙️ Configure your GoatCounter site code and API token in <a "
+"href=\"%s\">Settings</a>."
+msgstr ""
+"⚙️ Configure your GoatCounter site code and API token in <a "
+"href=\"%s\">Settings</a>."
+
+#: includes/class-admin.php:148
+msgid "Today"
+msgstr "Today"
+
+#: includes/class-admin.php:149
+msgid "7 days"
+msgstr "7 days"
+
+#: includes/class-admin.php:149
+msgid "last week"
+msgstr "last week"
+
+#: includes/class-admin.php:150
+msgid "30 days"
+msgstr "30 days"
+
+#: includes/class-admin.php:150
+msgid "last month"
+msgstr "last month"
+
+#: includes/class-admin.php:151
+msgid "Quarter"
+msgstr "Quarter"
+
+#: includes/class-admin.php:151
+msgid "90 days"
+msgstr "90 days"
+
+#: includes/class-admin.php:152
+msgid "Year"
+msgstr "Year"
+
+#: includes/class-admin.php:152
+msgid "365 days"
+msgstr "365 days"
+
+#: includes/class-admin.php:191
+msgid "Time filter"
+msgstr "Time filter"
+
+#: includes/class-admin.php:211
+msgid "Visits"
+msgstr "Visits"
+
+#: includes/class-admin.php:221 includes/class-admin.php:257
+msgid "Pages"
+msgstr "Pages"
+
+#: includes/class-admin.php:232 includes/class-admin.php:361
+msgid "Countries"
+msgstr "Countries"
+
+#: includes/class-admin.php:243
+msgid "Browser #1"
+msgstr "Browser #1"
+
+#: includes/class-admin.php:253
+msgid "Temporal"
+msgstr "Temporal"
+
+#: includes/class-admin.php:261
+msgid "Devices"
+msgstr "Devices"
+
+#: includes/class-admin.php:274
+#, php-format
+msgid "%d visits"
+msgstr "%d visits"
+
+#: includes/class-admin.php:283
+msgid "Day of week distribution"
+msgstr "Day of week distribution"
+
+#: includes/class-admin.php:300
+#, php-format
+msgid "· %s visits"
+msgstr "· %s visits"
+
+#: includes/class-admin.php:310
+msgid ""
+"No visits recorded yet for the selected period. Make sure the tracking "
+"script is active."
+msgstr ""
+"No visits recorded yet for the selected period. Make sure the tracking "
+"script is active."
+
+#: includes/class-admin.php:321
+msgid "Most visited pages"
+msgstr "Most visited pages"
+
+#: includes/class-admin.php:323
+#, php-format
+msgid "%d pages"
+msgstr "%d pages"
+
+#: includes/class-admin.php:327 includes/class-admin.php:421
+msgid "No data for the selected period."
+msgstr "No data for the selected period."
+
+#: includes/class-admin.php:341
+msgid "Browsers"
+msgstr "Browsers"
+
+#: includes/class-admin.php:350
+msgid "Operating system"
+msgstr "Operating system"
+
+#: includes/class-admin.php:363
+#, php-format
+msgid "%d countries"
+msgstr "%d countries"
+
+#: includes/class-admin.php:391 includes/class-admin.php:392
+msgid "Home"
+msgstr "Home"
+
+#: includes/class-admin.php:453 includes/class-admin.php:514
+msgid "Mo"
+msgstr "Mo"
+
+#: includes/class-admin.php:454 includes/class-admin.php:515
+msgid "Tu"
+msgstr "Tu"
+
+#: includes/class-admin.php:455 includes/class-admin.php:516
+msgid "We"
+msgstr "We"
+
+#: includes/class-admin.php:456 includes/class-admin.php:517
+msgid "Th"
+msgstr "Th"
+
+#: includes/class-admin.php:457 includes/class-admin.php:518
+msgid "Fr"
+msgstr "Fr"
+
+#: includes/class-admin.php:458 includes/class-admin.php:519
+msgid "Sa"
+msgstr "Sa"
+
+#: includes/class-admin.php:459 includes/class-admin.php:520
+msgid "Su"
+msgstr "Su"
+
+#: includes/class-admin.php:543
+msgid "No data."
+msgstr "No data."
+
+#: includes/class-admin.php:639
+msgid "Visits per hour (today)"
+msgstr "Visits per hour (today)"
+
+#: includes/class-admin.php:640
+msgid "Visits per day (last 7 days)"
+msgstr "Visits per day (last 7 days)"
+
+#: includes/class-admin.php:641
+msgid "Visits per day (last 30 days)"
+msgstr "Visits per day (last 30 days)"
+
+#: includes/class-admin.php:642
+msgid "Visits per week (last quarter)"
+msgstr "Visits per week (last quarter)"
+
+#: includes/class-admin.php:643
+msgid "Visits per month (last year)"
+msgstr "Visits per month (last year)"
