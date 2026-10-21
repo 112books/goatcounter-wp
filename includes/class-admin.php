@@ -318,7 +318,7 @@ class GCWP_Admin {
                 ];
                 $pp = $pages_period;
                 foreach ( $page_periods as $pkey => $pl ) :
-                    $purl = esc_url( add_query_arg( [ 'pp' => $pkey ] ) );
+                    $purl = esc_url( add_query_arg( [ 'period' => $period, 'pp' => $pkey ] ) );
                     $pact = $pp === $pkey ? ' active' : '';
                 ?>
                 <a href="<?php echo $purl; ?>" class="gcwp-period-opt<?php echo esc_attr( $pact ); ?>"><?php echo esc_html( $pl['label'] ); ?></a>
