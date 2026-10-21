@@ -134,9 +134,15 @@ class GCWP_Admin {
             'year'    => [ 'label' => 'Any',         'sub' => '365 dies' ],
         ];
 
+        // Page-period filter (for Pàgines/Seccions)
+        $valid_pp     = [ 'day', 'week', 'month', 'quarter', 'year', 'all' ];
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $pages_period = isset( $_GET['pp'] ) && in_array( $_GET['pp'], $valid_pp, true ) ? sanitize_key( $_GET['pp'] ) : 'all';
+        $api_pp       = ( $pages_period === 'all' ) ? 'year' : $pages_period;
+
         // Fetch data
         $totals    = $api->get_totals( $period );
-        $hits      = $api->get_hits( $period );
+        $hits      = $api->get_hits( $api_pp, 50 );
         $browsers  = $api->get_browsers( $period );
         $systems   = $api->get_systems( $period );
         $locations = $api->get_locations( $period );
@@ -310,7 +316,7 @@ class GCWP_Admin {
                     'year'    => [ 'label' => 'Any' ],
                     'all'     => [ 'label' => 'Totalitat' ],
                 ];
-                $pp = isset( $_GET['pp'] ) && array_key_exists( $_GET['pp'], $page_periods ) ? sanitize_key( $_GET['pp'] ) : 'all';
+                $pp = $pages_period;
                 foreach ( $page_periods as $pkey => $pl ) :
                     $purl = esc_url( add_query_arg( [ 'pp' => $pkey ] ) );
                     $pact = $pp === $pkey ? ' active' : '';
@@ -319,14 +325,15 @@ class GCWP_Admin {
                 <?php endforeach; ?>
             </nav>
             <?php
-            // Approximate range display
+            // Range display
             if ( $pp === 'all' ) {
-                echo '<div class="gcwp-period-hint">Mostrant totalitat del període disponible</div>';
+                echo '<div class="gcwp-period-hint">Mostrant dades totals disponibles</div>';
             } else {
-                $rmap = [ 'day' => '-0 days', 'week' => '-6 days', 'month' => '-30 days', 'quarter' => '-90 days', 'year' => '-365 days' ];
-                $pf = gmdate( 'Y-m-d', strtotime( $rmap[$pp] ?? '-7 days' ) );
-                $pt = gmdate( 'Y-m-d', strtotime( '+1 day' ) );
-                echo '<div class="gcwp-period-hint">Període: ' . esc_html( $pf ) . ' → ' . esc_html( gmdate('Y-m-d') ) . '</div>';
+                $rmap = [ 'day' => 0, 'week' => 6, 'month' => 30, 'quarter' => 90, 'year' => 365 ];
+                $days = $rmap[$pp] ?? 7;
+                $pf   = gmdate( 'Y-m-d', strtotime( '-' . $days . ' days' ) );
+                $pt   = gmdate( 'Y-m-d' );
+                echo '<div class="gcwp-period-hint">Període: ' . esc_html( $pf ) . ' → ' . esc_html( $pt ) . '</div>';
             }
             ?>
 

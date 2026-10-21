@@ -43,8 +43,8 @@ class GCWP_API {
         return [ 'start' => $start, 'end' => $end ];
     }
 
-    public function get_hits( $period = 'week' ) {
-        return $this->get( '/stats/hits', array_merge( $this->date_range( $period ), [ 'limit' => 15 ] ) );
+    public function get_hits( $period = 'week', $limit = 15 ) {
+        return $this->get( '/stats/hits', array_merge( $this->date_range( $period ), [ 'limit' => $limit ] ) );
     }
 
     public function get_totals( $period = 'week' ) {
