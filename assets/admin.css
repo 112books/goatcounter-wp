@@ -163,3 +163,11 @@
     .gcwp-tab { padding: 10px 12px; font-size: 12px; }
     .gcwp-metric-val { font-size: 1.6rem; }
 }
+
+/* ─── Hbar list inline rows ───────────────────────────── */
+.gcwp-hbar-row { display:grid; grid-template-columns: 180px 1fr 64px; align-items:center; gap:12px; padding:6px 0; }
+.gcwp-hbar-label { font-size:13px; color:#111827; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.gcwp-hbar-track { height:6px; background:#f3f4f6; border-radius:3px; overflow:hidden; }
+.gcwp-hbar-fill { height:100%; border-radius:3px; background:linear-gradient(to right, #D51F17 0%, #f87171 100%); transition:width .5s cubic-bezier(.4,0,.2,1); }
+.gcwp-hbar-val { text-align:right; font-size:13px; font-weight:600; color:#111827; }
+@media (max-width: 640px){ .gcwp-hbar-row { grid-template-columns: 120px 1fr 48px; } }

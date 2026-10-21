@@ -64,7 +64,11 @@ class GCWP_Admin {
     public function page_settings() {
         $site_code = get_option( 'gcwp_site_code', '' );
         ?>
-        <div class="wrap gcwp-wrap">
+        <div class="wrap gcwp-wrap">        <style>
+            .gcwp-period-nav--pages { margin: 0 0 .75rem; }
+            .gcwp-period-hint { color:#6b7280; font-size:12px; margin: -.25rem 0 1rem; }
+        </style>
+
             <h1>GoatCounter — Configuració</h1>
             <div class="gcwp-setup-box">
                 <h2>Com configurar GoatCounter</h2>
@@ -107,7 +111,11 @@ class GCWP_Admin {
 
         if ( ! $api->is_configured() ) {
             $settings_url = admin_url( 'admin.php?page=goatcounter-wp-settings' );
-            echo '<div class="wrap gcwp-wrap"><div class="gcwp-notice">'
+            echo '<div class="wrap gcwp-wrap">        <style>
+            .gcwp-period-nav--pages { margin: 0 0 .75rem; }
+            .gcwp-period-hint { color:#6b7280; font-size:12px; margin: -.25rem 0 1rem; }
+        </style>
+<div class="gcwp-notice">'
                . '⚙️ Configura el codi de lloc i el token API a <a href="' . esc_url( $settings_url ) . '">Configuració</a>.'
                . '</div></div>';
             return;
@@ -145,7 +153,11 @@ class GCWP_Admin {
 
         $site_code = get_option( 'gcwp_site_code' );
         ?>
-        <div class="wrap gcwp-wrap">
+        <div class="wrap gcwp-wrap">        <style>
+            .gcwp-period-nav--pages { margin: 0 0 .75rem; }
+            .gcwp-period-hint { color:#6b7280; font-size:12px; margin: -.25rem 0 1rem; }
+        </style>
+
 
         <!-- Top bar -->
         <div class="gcwp-topbar">
@@ -288,11 +300,81 @@ class GCWP_Admin {
         <!-- ═══ VIEW: PÀGINES ═══════════════════════════════ -->
         <div id="gcwp-view-pagines" class="gcwp-panel" data-panel="pagines" style="display:none">
 
+            <nav class="gcwp-period-nav gcwp-period-nav--pages" aria-label="Filtre per període pàgines">
+                <?php
+                $page_periods = [
+                    'day'     => [ 'label' => 'Dia' ],
+                    'week'    => [ 'label' => 'Setmana' ],
+                    'month'   => [ 'label' => 'Mes' ],
+                    'quarter' => [ 'label' => 'Trimestre' ],
+                    'year'    => [ 'label' => 'Any' ],
+                    'all'     => [ 'label' => 'Totalitat' ],
+                ];
+                $pp = isset( $_GET['pp'] ) && array_key_exists( $_GET['pp'], $page_periods ) ? sanitize_key( $_GET['pp'] ) : 'all';
+                foreach ( $page_periods as $pkey => $pl ) :
+                    $purl = esc_url( add_query_arg( [ 'pp' => $pkey ] ) );
+                    $pact = $pp === $pkey ? ' active' : '';
+                ?>
+                <a href="<?php echo $purl; ?>" class="gcwp-period-opt<?php echo esc_attr( $pact ); ?>"><?php echo esc_html( $pl['label'] ); ?></a>
+                <?php endforeach; ?>
+            </nav>
+            <?php
+            // Approximate range display
+            if ( $pp === 'all' ) {
+                echo '<div class="gcwp-period-hint">Mostrant totalitat del període disponible</div>';
+            } else {
+                $rmap = [ 'day' => '-0 days', 'week' => '-6 days', 'month' => '-30 days', 'quarter' => '-90 days', 'year' => '-365 days' ];
+                $pf = gmdate( 'Y-m-d', strtotime( $rmap[$pp] ?? '-7 days' ) );
+                $pt = gmdate( 'Y-m-d', strtotime( '+1 day' ) );
+                echo '<div class="gcwp-period-hint">Període: ' . esc_html( $pf ) . ' → ' . esc_html( gmdate('Y-m-d') ) . '</div>';
+            }
+            ?>
+
+            <div class="gcwp-block">
+                <div class="gcwp-block-header">
+                    <p class="gcwp-block-title">Seccions</p>
+                </div>
+                <?php
+                $sections = [];
+                if ( ! empty( $pages ) ) {
+                    foreach ( $pages as $h ) {
+                        $path = $h['path'] ?? $h['title'] ?? '';
+                        $parts = explode( '/', trim( $path, '/' ) );
+                        if ( empty( $parts[0] ) ) { $sec = 'home'; }
+                        elseif ( preg_match( '/^[a-z]{2}$/', $parts[0] ) && isset( $parts[1] ) ) { $sec = $parts[1]; }
+                        else { $sec = $parts[0]; }
+                        $map_sec = [
+                            'agenda'=>'Agenda','concerts'=>'Agenda','gigs'=>'Agenda',
+                            'biografia'=>'Biografia','biography'=>'Biografia',
+                            'discografia'=>'Discografia','discography'=>'Discografia',
+                            'videos'=>'Vídeos','video'=>'Vídeos',
+                            'fotos'=>'Fotografies','photos'=>'Fotografies',
+                            'premsa'=>'Premsa','press'=>'Premsa',
+                            'contacte'=>'Contacte','contact'=>'Contacte',
+                            'contractacio'=>'Contractació','booking'=>'Contractació',
+                            'home'=>'Inici',
+                        ];
+                        $sname = $map_sec[$sec] ?? ucfirst($sec);
+                        $sections[$sname] = ($sections[$sname] ?? 0) + intval( $h['count'] ?? 0 );
+                    }
+                    arsort( $sections );
+                    $maxs = ! empty( $sections ) ? max( $sections ) : 1;
+                    foreach ( $sections as $sname => $scnt ) :
+                        $bp = round( ( $scnt / $maxs ) * 100 );
+                ?>
+                <div class="gcwp-hbar-row">
+                    <div class="gcwp-hbar-label"><?php echo esc_html( $sname ); ?></div>
+                    <div class="gcwp-hbar-track"><div class="gcwp-hbar-fill" style="width:<?php echo esc_attr( $bp ); ?>%"></div></div>
+                    <div class="gcwp-hbar-val"><?php echo esc_html( number_format_i18n( $scnt ) ); ?></div>
+                </div>
+                <?php endforeach; if ( empty( $sections ) ) echo '<p class="gcwp-empty">Sense dades de seccions</p>'; } else { echo '<p class="gcwp-empty">Sense dades per al període seleccionat.</p>'; } ?>
+            </div>
+
             <div class="gcwp-block">
                 <div class="gcwp-block-header">
                     <p class="gcwp-block-title">Pàgines més visitades</p>
                     <?php if ( ! empty( $pages ) ) : ?>
-                    <span class="gcwp-block-badge"><?php echo count( $pages ); ?> pàgines</span>
+                    <span class="gcwp-block-badge"><?php echo count( $pages ); ?> pàgines · <?php echo esc_html( number_format_i18n( $total_visits ) ); ?> visites</span>
                     <?php endif; ?>
                 </div>
                 <?php if ( empty( $pages ) ) : ?>
