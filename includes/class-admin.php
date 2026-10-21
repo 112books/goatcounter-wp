@@ -150,6 +150,7 @@ class GCWP_Admin {
         $total_visits = $totals['total'] ?? 0;
         $daily_stats  = $totals['stats'] ?? [];
         $pages        = $hits['hits'] ?? [];
+        $pages_total  = ! empty( $pages ) ? array_sum( array_column( $pages, 'count' ) ) : 0;
         $browser_list = $browsers['stats'] ?? [];
         $system_list  = $systems['stats'] ?? [];
         $country_list = $locations['stats'] ?? [];
@@ -381,7 +382,7 @@ class GCWP_Admin {
                 <div class="gcwp-block-header">
                     <p class="gcwp-block-title">Pàgines més visitades</p>
                     <?php if ( ! empty( $pages ) ) : ?>
-                    <span class="gcwp-block-badge"><?php echo count( $pages ); ?> pàgines · <?php echo esc_html( number_format_i18n( $total_visits ) ); ?> visites</span>
+                    <span class="gcwp-block-badge"><?php echo count( $pages ); ?> pàgines · <?php echo esc_html( number_format_i18n( $pages_total ) ); ?> visites</span>
                     <?php endif; ?>
                 </div>
                 <?php if ( empty( $pages ) ) : ?>

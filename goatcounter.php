@@ -3,7 +3,7 @@
  * Plugin Name:       LinuxBCN Analytics for GoatCounter
  * Plugin URI:        https://github.com/112books/goatcounter-wp
  * Description:       Privacy-friendly analytics via GoatCounter. No cookies, no GDPR banner. Stats dashboard in your WordPress admin.
- * Version:           1.2.4
+ * Version:           1.2.5
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            LinuxBCN
@@ -16,7 +16,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'GCWP_VERSION', '1.2.4' );
+define( 'GCWP_VERSION', '1.2.5' );
 define( 'GCWP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GCWP_URL', plugin_dir_url( __FILE__ ) );
 
