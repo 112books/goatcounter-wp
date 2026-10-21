@@ -180,7 +180,7 @@ class GCWP_Admin {
         <!-- Period selector -->
         <nav class="gcwp-period-nav" aria-label="Filtre temporal">
             <?php foreach ( $periods as $key => $p ) :
-                $url    = esc_url( add_query_arg( 'period', $key ) );
+                $url    = esc_url( add_query_arg( [ 'period' => $key, 'pp' => $pages_period ] ) );
                 $active = $period === $key ? ' active' : '';
                 ?>
                 <a href="<?php echo esc_url( $url ); ?>" class="gcwp-period-opt<?php echo esc_attr( $active ); ?>">
