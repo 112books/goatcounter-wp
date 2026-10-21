@@ -134,14 +134,11 @@ class GCWP_Admin {
             'year'    => [ 'label' => 'Any',         'sub' => '365 dies' ],
         ];
 
-        // Page-period filter (for Pàgines/Seccions)
-        $valid_pp     = [ 'day', 'week', 'month', 'quarter', 'year', 'all' ];
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $pages_period = isset( $_GET['pp'] ) && in_array( $_GET['pp'], $valid_pp, true ) ? sanitize_key( $_GET['pp'] ) : 'all';
-        $api_pp       = ( $pages_period === 'all' ) ? 'year' : $pages_period;
+        // Pàgines i seccions usen el mateix període que el filtre superior
 
         // Fetch data
         $totals    = $api->get_totals( $period );
+        $api_pp    = $period;
         $hits      = $api->get_hits( $api_pp, 50 );
         $browsers  = $api->get_browsers( $period );
         $systems   = $api->get_systems( $period );
@@ -181,7 +178,7 @@ class GCWP_Admin {
         <!-- Period selector -->
         <nav class="gcwp-period-nav" aria-label="Filtre temporal">
             <?php foreach ( $periods as $key => $p ) :
-                $url    = esc_url( add_query_arg( [ 'period' => $key, 'pp' => $pages_period ] ) );
+                $url    = esc_url( add_query_arg( [ 'period' => $key ] ) );
                 $active = $period === $key ? ' active' : '';
                 ?>
                 <a href="<?php echo esc_url( $url ); ?>" class="gcwp-period-opt<?php echo esc_attr( $active ); ?>">
@@ -306,36 +303,12 @@ class GCWP_Admin {
 
         <!-- ═══ VIEW: PÀGINES ═══════════════════════════════ -->
         <div id="gcwp-view-pagines" class="gcwp-panel" data-panel="pagines" style="display:none">
-
-            <nav class="gcwp-period-nav gcwp-period-nav--pages" aria-label="Filtre per període pàgines">
-                <?php
-                $page_periods = [
-                    'day'     => [ 'label' => 'Dia' ],
-                    'week'    => [ 'label' => 'Setmana' ],
-                    'month'   => [ 'label' => 'Mes' ],
-                    'quarter' => [ 'label' => 'Trimestre' ],
-                    'year'    => [ 'label' => 'Any' ],
-                    'all'     => [ 'label' => 'Totalitat' ],
-                ];
-                $pp = $pages_period;
-                foreach ( $page_periods as $pkey => $pl ) :
-                    $purl = esc_url( add_query_arg( [ 'period' => $period, 'pp' => $pkey ] ) );
-                    $pact = $pp === $pkey ? ' active' : '';
-                ?>
-                <a href="<?php echo $purl; ?>" class="gcwp-period-opt<?php echo esc_attr( $pact ); ?>"><?php echo esc_html( $pl['label'] ); ?></a>
-                <?php endforeach; ?>
-            </nav>
             <?php
-            // Range display
-            if ( $pp === 'all' ) {
-                echo '<div class="gcwp-period-hint">Mostrant dades totals disponibles</div>';
-            } else {
-                $rmap = [ 'day' => 0, 'week' => 6, 'month' => 30, 'quarter' => 90, 'year' => 365 ];
-                $days = $rmap[$pp] ?? 7;
-                $pf   = gmdate( 'Y-m-d', strtotime( '-' . $days . ' days' ) );
-                $pt   = gmdate( 'Y-m-d' );
-                echo '<div class="gcwp-period-hint">Període: ' . esc_html( $pf ) . ' → ' . esc_html( $pt ) . '</div>';
-            }
+            $rmap = [ 'day' => 0, 'week' => 6, 'month' => 30, 'quarter' => 90, 'year' => 365 ];
+            $days = $rmap[$period] ?? 7;
+            $pf   = gmdate( 'Y-m-d', strtotime( '-' . $days . ' days' ) );
+            $pt   = gmdate( 'Y-m-d' );
+            echo '<div class="gcwp-period-hint">Període: ' . esc_html( $pf ) . ' → ' . esc_html( $pt ) . '</div>';
             ?>
 
             <div class="gcwp-block">
